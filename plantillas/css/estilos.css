@@ -1,0 +1,659 @@
+/**
+*Indice de estilos para el Custom Post Type Directorios
+*Todas las propiedades fueron ordenadas alfabéticamente para una mejor lectura
+*
+*A continuación se muestran los estilos para las páginas del Custom Post Type Directorios
+*En orden de aparición nos encontraremos con:
+*
+*********Estilos para la plantilla Categories*********
+*
+***********Estilos para la plantilla Single**********
+*/
+
+
+
+
+/**
+*
+*
+*********Estilos para la plantilla Categories*********
+*
+*
+**/
+
+/**
+*Estilos para el contenedor principal de la página
+*/
+#directorio-categoria-contenedor{
+	box-sizing: border-box;
+	color: #333;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	margin: 0 auto;
+	max-width: 750px;
+	min-width: 283px;
+	padding: 0 15px;
+}
+
+.elemento-directorio{
+	margin-top: 25px;
+}
+
+.imagen-directorio{
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+	height: 200px;
+	width: 200px;
+}
+
+.listado-directorio-info{
+	box-sizing: border-box;
+	display: inline-block;
+	padding: 0 10px;
+	vertical-align: top;
+	width: calc(100% - 210px);
+}
+
+.listado-directorio-info header i{
+	font-size: 1.4em;
+	margin-right: 5px;
+}
+
+.listado-directorio-info header h3{
+	display: inline-block;
+	font-size: 1.3em;
+	font-style: italic;
+	font-weight: normal;
+	margin-bottom: 10px;
+	margin-top: 0;
+}
+
+.listado-directorio-info #directorio-individual-tags{
+	float: none;
+}
+
+.listado-directorio-descripcion{
+	font-style: italic;
+}
+
+.listado-directorio-direccion{
+	color: #888;
+	display: inline-block;
+	font-size: .9em;
+	margin: 5px 0;
+	width: 250px;
+}
+
+.listado-directorio-direccion i{
+	font-size: 20px;
+}
+
+.listado-directorio-direccion span{
+	display: inline-block;
+	vertical-align: top;
+	width: calc(100% - 20px);
+}
+
+.listado-directorio-boton{
+	background: #F44336;
+	color: #fff;
+	float: right;
+	padding: 10px 20px;
+	text-decoration: none;
+}
+
+.listado-directorio-boton:hover{
+	background: #d4362b;
+}
+
+
+
+
+
+
+/**
+*Estilos para el panel de búsqueda y filtrado
+*/
+#directorios-panel{
+	background-image: url(../imagenes/fondo-directorios.jpg);
+	background-position: top center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 15px 30px;
+}
+
+#directorios-panel header{
+	color: #fff;
+}
+
+#directorios-panel header i{
+	font-size: 2em;
+	margin-right: 7px;
+}
+
+#directorios-panel header h1{
+	display: inline-block;
+	font-weight: normal;
+	font-size: 2em;
+	margin: 0;
+}
+
+#panel-barra-colores{
+	height: 4px;
+	position: relative;
+	top: -12px;
+	width: 100%;
+}
+
+#panel-busqueda{
+	background-color: rgba(51,51,51,.9);
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	margin-top: 15px;
+	padding: 20px;
+}
+
+#panel-busqueda>div{
+	margin-top: 15px;
+}
+
+#panel-busqueda>div:first-child{
+	margin-top: 0;
+}
+
+#panel-busqueda>div>span{
+	display: inline-block;
+	width: 150px;
+}
+
+#panel-busqueda input,#panel-busqueda select{
+	border: none;
+	background: #fff;
+	padding: 5px 10px;
+	width: 175px;
+}
+
+#panel-busqueda input[type="submit"]{
+	width: 100%;
+	margin-top: 15px;
+	background: #2b901f;
+	color: #fff;
+}
+
+#panel-busqueda input[type="submit"]:hover{
+	background: #6fb666;
+	cursor: pointer;
+}
+/**
+*Colores para cada una de las categorías
+*/
+
+.directorio-hotel{
+	color: #5f2e79;
+}
+
+.directorio-cafes{
+	color: #a05b2a;
+}
+
+.directorio-vida-nocturna{
+	color: #3f51b5;
+}
+
+.directorio-restaurant{
+	color: #F44336;
+}
+
+.directorio-medhosp{
+	color: #0087c3;
+}
+
+.directorio-salud-belleza{
+	color: #54a000;
+}
+
+.directorio-fitness{
+	color: #333;
+}
+
+.directorio-galerias-arte{
+	color: #556b2f;
+}
+
+.directorio-daypass{
+	color: #ff8100;
+}
+
+
+/**
+*Estilos responsive para la plantilla de categories
+*/
+@media all and (min-width: 601px) and (max-width: 749px){
+	.listado-directorio-descripcion{
+		font-size: .9em;
+	}
+
+	.elemento-directorio #directorio-individual-tags>div{
+		font-size: 10px;
+		margin-right: 0;
+		padding: 2px 5px;
+	}
+}
+
+
+
+@media all and (max-width: 600px){
+	
+	.listado-directorio-descripcion{
+		font-size: 14px;
+	}
+
+	.imagen-directorio{
+		display: block;
+		width: 100%;
+	}
+
+	.listado-directorio-info{
+		display: block;
+		padding: 0 0 25px 0;
+		width: 100%;
+	}
+
+	.listado-directorio-direccion{
+		display: none;
+	}
+
+	.listado-directorio-boton{
+		display: inline-block;
+		float: none;
+	}
+
+	/**
+	*Nuevos estilos para las categorías
+	*/
+
+	.elemento-directorio .listado-directorio-info header{
+		color: #fff;
+		margin-bottom: 15px;
+		padding: 10px 0 0 0;
+		text-align: center;
+	}
+
+	.elemento-directorio #directorio-individual-tags>div{
+		display: block;
+		margin-top: 3px;
+	}
+
+	.directorio-hotel{
+		background: #5f2e79;
+	}
+
+	.directorio-cafes{
+		background: #a05b2a;
+	}
+
+	.directorio-vida-nocturna{
+		background: #3f51b5;
+	}
+
+	.directorio-restaurant{
+		background: #F44336;
+	}
+
+	.directorio-medhosp{
+		background: #0087c3;
+	}
+
+	.directorio-salud-belleza{
+		background: #54a000;
+	}
+
+	.directorio-fitness{
+		background: #333;
+	}
+
+	.directorio-galerias-arte{
+		background: #556b2f;
+	}
+
+	.directorio-daypass{
+		background: #ff8100;
+	}
+}
+
+
+
+
+
+/**
+*
+*
+***********Estilos para la plantilla Single**********
+*
+*
+**/
+
+/**
+*Estilos para el contenedor principal de la página
+*/
+#directorio-individual-contenedor{
+	box-sizing: border-box;
+	color: #333;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	margin: 0 auto;
+	max-width: 750px;
+	min-width: 283px;
+}
+
+#directorio-individual-contenedor p{
+	line-height: 23px;
+	margin: 0;
+	text-align: justify;
+}
+
+#directorio-individual-contenedor header h2{
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+}
+
+#directorio-individual-contenedor>div>header{
+	font-size: 20px;
+}
+
+#directorio-individual-contenedor>div>header>h2{
+	display: inline-block;
+}
+
+#directorio-individual-servicios,
+#directorio-individual-metodos-de-pago,
+#directorio-individual-horarios,
+#directorio-individual-informacion-contacto{
+	display: inline-block;
+	vertical-align: top;
+}
+
+#directorio-individual-servicios,
+#directorio-individual-horarios{
+	width: 55%;
+}
+
+#directorio-individual-metodos-de-pago,
+#directorio-individual-informacion-contacto{
+	width: 44%;
+}
+
+
+
+/**
+*Estilos para el header principal del contenido de la página
+*/
+#directorio-individual-contenedor>header{
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-height: 274px;
+}
+
+#pdi-directorio-single-cabecera{
+	position: relative;
+}
+
+#pdi-directorio-single-cabecera:before{
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: .6;
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0,0,0,0.75) 80%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+#pdi-directorio-single-cabecera #pdi-directorio-logo{
+	display: inline-block;
+	position: absolute;
+	bottom: -15px;
+	left: 15px;
+	padding: 3px;
+	background: #fff;
+	border-radius: 1px;
+	border: 1px solid #d0d0d0;
+}
+
+#pdi-directorio-single-cabecera #pdi-directorio-logo>div{
+	width: 150px;
+	height: 150px;
+	background-size: cover;
+	background-position: center center;
+}
+
+#directorio-individual-nombre-lugar{
+	position: absolute;
+	bottom: 15px;
+	left: 180px;
+}
+
+#directorio-individual-nombre-lugar h1{
+	color: #fff;
+	display: inline-block;
+	font-size: 21px;
+	font-style: italic;
+	margin: 0;
+	padding: 5px 20px
+}
+
+
+
+
+/**
+*Estilos para la descripción
+*/
+#directorio-individual-contenedor>div{
+	margin-top: 25px;
+}
+
+#directorio-individual-contenedor>div:nth-child(2){
+	margin-top: 0;
+}
+
+#directorio-individual-descripcion header{
+	margin-top: 25px;
+	display: inline-block;
+	width: 100%;
+}
+
+#directorio-individual-descripcion header h2{
+	float: left;
+	margin: 0;
+	margin-top: 5px;
+}
+
+#directorio-individual-tags{
+	position: absolute;
+	bottom: -27px;
+	right: 0;
+}
+
+#directorio-individual-tags>div{
+	color: #fff;
+	display: inline-block;
+	font-size: 11px;
+	margin-right: 5px;
+	padding: 2px 10px;
+}
+
+#directorio-individual-tags i{
+	margin-right: 5px;
+}
+
+.dir-acepta-tarjetas{
+	background: #eb3472;
+}
+
+.dir-pet-friendly{
+	background: #6fb566;
+}
+
+.dir-adecuado{
+	background: #26aae0;
+}
+
+.dir-envios-domicilio{
+	background: #f9b248;
+}
+
+
+
+
+/**
+*Estilos para la lista de servicios
+*/
+#dir-lista-servicios ul{
+	margin: 0;
+	padding-left: 22px;
+}
+
+#dir-lista-servicios li{
+	list-style: none;
+	margin-bottom: 5px;
+	line-height: 18px;
+}
+
+#dir-lista-servicios li span{
+	display: inline-block;
+	vertical-align: top;
+	width: calc(100% - 25px);
+}
+
+#dir-lista-servicios li:before{
+	content: "\f00c";
+	font-family: FontAwesome;
+	margin-right: 10px;
+}
+
+
+
+
+/**
+*Estilos para los métodos de pago
+*/
+#directorio-individual-metodos-de-pago header h2{
+	margin-left: 6px;
+}
+
+#dir-metodos-pago ul{
+	margin: 0;
+	padding-left: 22px;
+}
+
+#dir-metodos-pago li{
+	list-style: none;
+	margin-bottom: 5px;
+	line-height: 18px;
+}
+
+.dir-efectivo:before{
+	content: "\f0d6";
+	font-family: FontAwesome;
+	font-size: 1.6em;
+	margin-right: 10px;
+}
+
+.dir-visa:before{
+	content: "\f1f0";
+	font-family: FontAwesome;
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
+.dir-mastercard:before{
+	content: "\f1f1";
+	font-family: FontAwesome;
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
+
+
+
+/**
+*Estilos para los horarios de atención
+*/
+#dir-horarios-atencion,#dir-info-contacto{
+	margin-left: 22px;
+}
+
+#dir-tabla-horarios{
+	border-collapse: collapse;
+	width: calc(100% - 25px);
+}
+
+#dir-tabla-horarios td{
+	border: 1px solid #333;
+	padding: 3px 10px;
+	line-height: 20px;
+}
+
+.dir-sin-servicio{
+	background: #e0e0e0;
+}
+
+
+
+/**
+*Estilos para la información de contacto
+*/
+
+#dir-info-contacto>div:first-child{
+	margin-top: 0;
+}
+
+#dir-info-contacto>div{
+	margin-top: 10px;
+}
+
+#dir-info-contacto i{
+	font-size: 1.3em;
+	width: 25px;
+}
+
+#dir-info-contacto a{
+	color: #333;
+}
+
+.dir-direccion span{
+	display: inline-block;
+	width: calc(100% - 30px);
+	vertical-align: top;
+}
+
+
+
+/**
+*Estilos para la ubicación geográfica
+*/
+#directorio-individual-ubicacion-geografica{
+	margin-top: 25px;
+}
+
+#dir-ubicacion-mapa{
+	background: #666;
+	height: 350px;
+	width: 100%;
+}
+
+
+
+/**
+*Estilos para la versión responsive de la plantilla
+*/
+@media all and (max-width: 620px){
+	#directorio-individual-contenedor>div{
+		display: block;
+		width: 100%;
+	}
+}
