@@ -5,12 +5,13 @@ echo "<div class='row'>";
 echo "<div id='th-twocolumns' class='th-twocolumns'>";
 $title = get_the_title();
 $pdi_dirs_logo = get_the_post_thumbnail_url();
+$pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
 		<div id="directorio-individual-contenedor">
 		<!--Espacio para la información de inicio-->
-		<header id="pdi-directorio-single-cabecera" style="background-image: url(https://exp.cdn-hotels.com/hotels/1000000/120000/118000/117967/117967_199_z.jpg);">
+		<header id="pdi-directorio-single-cabecera" <?php if($pdi_dirs_portada == ""){echo 'style="background: #1e4e77;"';} else {echo 'style="background-image: url('.$pdi_dirs_portada.');"';}?>>
 			<div id="pdi-directorio-logo"><div style="background-image: url(<?php echo $pdi_dirs_logo; ?>)"></div></div>
 			<div id="pdi-directorio-nombre"><div id="directorio-individual-nombre-lugar"><h1><?php echo $title;?></h1></div></div>
 			<div id="directorio-individual-tags">
@@ -32,7 +33,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<!--Inicio de la descripción-->
 		<div id="directorio-individual-descripcion">
 			<header>
-				<h2>Acerca de <?php echo $title; ?></h2>
+				<h2><?php _e("Acerca de ","pdidirlang"); echo $title; ?></h2>
 			</header>
 			<p><?php echo get_the_content(); ?></p>
 		</div>
@@ -41,7 +42,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<div id="directorio-individual-servicios">
 			<header>
 				<i class="fa fa-check-square" aria-hidden="true"></i>
-				<h2>Servicios</h2>
+				<h2><?php _e("Servicios","pdidirlang"); ?></h2>
 			</header>
 			<div id="dir-lista-servicios">
 				<ul>
@@ -57,7 +58,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<div id="directorio-individual-metodos-de-pago">
 			<header>
 				<i class="fa fa-usd" aria-hidden="true"></i>
-				<h2>Métodos de pago</h2>
+				<h2><?php _e("Métodos de pago","pdidirlang"); ?></h2>
 			</header>
 			<div id="dir-metodos-pago">
 				<ul>
@@ -72,7 +73,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<div id="directorio-individual-horarios">
 			<header>
 				<i class="fa fa-clock-o" aria-hidden="true"></i>
-				<h2>Horarios de atención</h2>
+				<h2><?php _e("Horarios de atención","pdidirlang"); ?></h2>
 			</header>
 			<div id="dir-horarios-atencion">
 				<table id="dir-tabla-horarios">
@@ -112,7 +113,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<div id="directorio-individual-informacion-contacto">
 			<header>
 				<i class="fa fa-info-circle" aria-hidden="true"></i>
-				<h2>Información de contacto</h2>
+				<h2><?php _e("Información de contacto","pdidirlang"); ?></h2>
 			</header>
 			<div id="dir-info-contacto">
 				<div class="dir-direccion">
@@ -138,7 +139,7 @@ $pdi_dirs_logo = get_the_post_thumbnail_url();
 		<div id="directorio-individual-ubicacion-geografica">
 			<header>
 				<i class="fa fa-map-o" aria-hidden="true"></i>
-				<h2>Ubicación geográfica</h2>
+				<h2><?php _e("Ubicación geográfica","pdidirlang") ?></h2>
 			</header>
 			<div id="dir-ubicacion-mapa">
 				<script>
