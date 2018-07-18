@@ -169,24 +169,6 @@ function pdi_portada_callback($post){
 	<input type="text" name="pdi_dir_portada" style="width: 300px;" value="<?php echo $portada_actual; ?>"><?php
 }
 
-/* Función que guarda los datos en la base de datos */
-	function pdi_dir_guardar_datos($post_id){
-		//Verificación del Nonce
-		if(!isset($_POST['pdi_portada_nonce']) || !wp_verify_nonce($_POST['pdi_portada_nonce'], basename(__FILE__))){
-			return;
-		}
-
-		//Verificar permisos de ususario
-		if(!current_user_can('edit_post',$post_id)){
-			return;
-		}
-
-		//Guardando los valores introducidos
-		if(isset($_REQUEST['pdi_dir_portada'])){
-			update_post_meta($post_id,'_pdi_dir_portada',sanitize_text_field($_POST['pdi_dir_portada']));
-		}
-	}
-
 /*--
 #
 # Fin del metabox de la imagen de portada
@@ -224,23 +206,98 @@ function pdi_etiquetas_callback($post){
 	//Field nonce para aumentar la seguridad al ingresar información a la DB
 	wp_nonce_field(basename(__FILE__),'pdi_etiquetas_nonce');
 
-	// Obteniendo el valor de la base de datos
-	$pdi_etiqueta_petfriendly_actual = get_post_meta($post->ID,'_pdi_dir_etiquetas', true);
+	// Obteniendo el valor de la base de datos de Acepta Tarjetas
+	$pdi_etiqueta_acepta_tarjetas_actual = get_post_meta($post->ID,'_pdi_dir_acepta_tarjetas',true);
 
-	// Formulario etiquetas
+	// Obteniendo el valor de la base de datos de Pet Friendly
+	$pdi_etiqueta_pet_friendly_actual = get_post_meta($post->ID,'_pdi_dir_pet_friendly',true);
+
+	// Obteniendo el valor de la base de datos de Servicio a Domicilio
+	$pdi_etiqueta_servicio_domicilio_actual = get_post_meta($post->ID,'_pdi_dir_servicio_domicilio',true);
+
+	// Obteniendo el valor de la base de datos de Establecimiento Adecuado
+	$pdi_etiqueta_instalaciones_adecuadas_actual = get_post_meta($post->ID,'_pdi_dir_instalaciones_adecuadas',true);
 	?>
+	<!-- Contenedor etiquetas -->
 	<div class="pdi-dir-etiquetas-contenedor">
-		<h4>¿Este establecimiento es Pet Friendly?</h4>
-		<div><input type="radio" name="pdi_dir_pet_friendly" value="0" <?php checked($current_pdi_dir_pet_friendly,'0');?> /> Si</div>
-		<div><input type="radio" name="pdi_dir_pet_friendly" value="1" <?php checked($current_pdi_dir_pet_friendly,'1');?>/> No</div>
+		<!-- Etiqueta Pet Friendly -->
+		<div id="pdi-dir-pet-friendly-admin">
+			<h4>¿Este establecimiento es Pet Friendly?</h4>
+			<div><input type="radio" name="pdi_dir_pet_friendly" value="0" <?php checked($pdi_etiqueta_pet_friendly_actual,'0');?>/> No</div>
+			<div><input type="radio" name="pdi_dir_pet_friendly" value="1" <?php checked($pdi_etiqueta_pet_friendly_actual,'1');?>/> Si</div>
+		</div>
+		<!-- Etiqueta Acepta Tarjetas -->
+		<div id="pdi-dir-acepta-tarjetas-admin">
+			<h4>¿Este establecimiento Acepta Tarjetas de Crédito?</h4>
+			<div><input type="radio" name="pdi_dir_acepta_tarjetas" value="0" <?php checked($pdi_etiqueta_acepta_tarjetas_actual,'0');?>/> No</div>
+			<div><input type="radio" name="pdi_dir_acepta_tarjetas" value="1" <?php checked($pdi_etiqueta_acepta_tarjetas_actual,'1');?>/> Si</div>
+		</div>
+		<!-- Etiqueta Envíos a Domicilio -->
+		<div id="pdi-dir-servicio-domicilio-admin">
+			<h4>¿Este establecimiento ofrece Servicio a Domicilio?</h4>
+			<div><input type="radio" name="pdi_dir_servicio_domicilio" value="0" <?php checked($pdi_etiqueta_servicio_domicilio_actual,'0');?>/> No</div>
+			<div><input type="radio" name="pdi_dir_servicio_domicilio" value="1" <?php checked($pdi_etiqueta_servicio_domicilio_actual,'1');?>/> Si</div>
+		</div>
+		<!-- Etiqueta Instalaciones Adecuadas -->
+		<div id="pdi-dir-instalaciones-adecuadas-admin">
+			<h4>¿Las instalaciones de este establecimiento son adecuadas para personas con capacidades diferentes?</h4>
+			<div><input type="radio" name="pdi_dir_instalaciones_adecuadas" value="0" <?php checked($pdi_etiqueta_instalaciones_adecuadas_actual,'0');?>/> No</div>
+			<div><input type="radio" name="pdi_dir_instalaciones_adecuadas" value="1" <?php checked($pdi_etiqueta_instalaciones_adecuadas_actual,'1');?>/> Si</div>
+		</div>
 	</div><?php
 }
 
+
+/* Función que guarda los metadatos en la base de datos */
+	function pdi_dir_guardar_datos($post_id){
+		//Verificación del Nonce de imagen de portada
+		if(!isset($_POST['pdi_portada_nonce']) || !wp_verify_nonce($_POST['pdi_portada_nonce'], basename(__FILE__))){
+			return;
+		}
+
+		//Verificación del Nonce de etiquetas servicios adicionales
+		if(!isset($_POST['pdi_etiquetas_nonce']) || !wp_verify_nonce($_POST['pdi_etiquetas_nonce'], basename(__FILE__))){
+			return;
+		}
+
+		//Verificar permisos de ususario
+		if(!current_user_can('edit_post',$post_id)){
+			return;
+		}
+
+		//Guardando los valores introducidos
+		
+		//Imagen de portada
+		if(isset($_REQUEST['pdi_dir_portada'])){
+			update_post_meta($post_id,'_pdi_dir_portada',sanitize_text_field($_POST['pdi_dir_portada']));
+		}
+
+		//Etiquetas de servicios adicionales
+		//Pet Friendly
+		if(isset($_REQUEST['pdi_dir_pet_friendly'])){
+			update_post_meta($post_id,'_pdi_dir_pet_friendly',
+			sanitize_text_field($_POST['pdi_dir_pet_friendly']));
+		}
+		//Acepta Tarjetas
+		if (isset($_REQUEST['pdi_dir_acepta_tarjetas'])) {
+			update_post_meta($post_id,'_pdi_dir_acepta_tarjetas',
+				sanitize_text_field($_POST['pdi_dir_acepta_tarjetas']));
+		}
+		//Servicio a Domicilio
+		if (isset($_REQUEST['pdi_dir_servicio_domicilio'])) {
+			update_post_meta($post_id,'_pdi_dir_servicio_domicilio',
+			sanitize_text_field($_POST['pdi_dir_servicio_domicilio']));
+		}
+		//Instalaciones Adecuadas
+		if (isset($_REQUEST['pdi_dir_instalaciones_adecuadas'])) {
+			update_post_meta($post_id,'_pdi_dir_instalaciones_adecuadas',
+				sanitize_text_field($_POST['pdi_dir_instalaciones_adecuadas'])
+			);
+		}
+	}
 /*--
 #
 # Fin del metabox de las etiquetas de características del negocio
 #
 #--*/
-
-
 ?>

@@ -6,6 +6,10 @@ echo "<div id='th-twocolumns' class='th-twocolumns'>";
 $title = get_the_title();
 $pdi_dirs_logo = get_the_post_thumbnail_url();
 $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
+$pdi_dirs_petfriendly = get_post_meta($post->ID,'_pdi_dir_pet_friendly',true);
+$pdi_dirs_aceptatarjetas = get_post_meta($post->ID,'_pdi_dir_acepta_tarjetas',true);
+$pdi_dirs_serviciodomicilio = get_post_meta($post->ID,'_pdi_dir_servicio_domicilio',true);
+$pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalaciones_adecuadas',true);
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
@@ -14,20 +18,46 @@ $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
 		<header id="pdi-directorio-single-cabecera" <?php if($pdi_dirs_portada == ""){echo 'style="background: #1e4e77;"';} else {echo 'style="background-image: url('.$pdi_dirs_portada.');"';}?>>
 			<div id="pdi-directorio-logo"><div style="background-image: url(<?php echo $pdi_dirs_logo; ?>)"></div></div>
 			<div id="pdi-directorio-nombre"><div id="directorio-individual-nombre-lugar"><h1><?php echo $title;?></h1></div></div>
+			<!-- Etiquetas de servicios adicionales -->
 			<div id="directorio-individual-tags">
+				<?php
+				if ($pdi_dirs_aceptatarjetas == 1) {
+				?>
+				<!-- Etiqueta de Acepta tarjetas -->
 				<div class="dir-acepta-tarjetas">
 					<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
-					<span>ACEPTA TARJETAS</span>
+					<span><?php _e("ACEPTA TARJETAS","pdidirlang");?></span>
 				</div>
+				<?php
+				}
+				if ($pdi_dirs_petfriendly == 1) {
+				?>
+				<!-- Etiqueta de Pet Friendly -->
 				<div class="dir-pet-friendly">
 					<i class="fa fa-paw" aria-hidden="true"></i>
-					<span>PET FRIENDLY</span>
+					<span><?php _e("PET FRIENDLY","pdidirlang");?></span>
 				</div>
+				<?php
+				}
+				if ($pdi_dirs_serviciodomicilio == 1) {
+				?>
+				<!-- Etiqueta de Servicio a domicilio -->
+				<div class="dir-envios-domicilio">
+					<i class="fas fa-motorcycle" aria-hidden="true"></i>
+					<span><?php _e("SERVICIO A DOMICILIO","pdidirlang"); ?></span>
+				</div>	
+				<?php	
+				}
+				if ($pdi_dirs_instalacionesadecuadas == 1) {
+				?>
+				<!-- Etiqueta de Adecuado para capacidades diferentes -->
 				<div class="dir-adecuado">
 					<i class="fa fa-wheelchair" aria-hidden="true"></i>
-					<span>ADECUADO</span>
+					<span><?php _e("ADECUADO","pdidirlang");?></span>
 				</div>
+				<?php } ?>
 			</div>
+			<!--Fin de etiquetas de servicios adicionales-->
 		</header>
 		<!--Fin de espacio para la información de inicio-->
 		<!--Inicio de la descripción-->
@@ -62,9 +92,9 @@ $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
 			</header>
 			<div id="dir-metodos-pago">
 				<ul>
-					<li class="dir-efectivo">Aceptamos Efectivo</li>
-					<li class="dir-visa">Aceptamos VISA</li>
-					<li class="dir-mastercard">Aceptamos MasterCard</li>
+					<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
+					<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
+					<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
 				</ul>
 			</div>
 		</div>
@@ -78,31 +108,31 @@ $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
 			<div id="dir-horarios-atencion">
 				<table id="dir-tabla-horarios">
 					<tr>
-						<td>Lunes:</td>
+						<td><?php _e("Lunes:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 					<tr class="dir-sin-servicio">
-						<td>Martes:</td>
+						<td><?php _e("Martes:","pdidirlang");?></td>
 						<td>No hay servicio</td>
 					</tr>
 					<tr>
-						<td>Miércoles:</td>
+						<td><?php _e("Miércoles:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 					<tr>
-						<td>Jueves:</td>
+						<td><?php _e("Jueves:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 					<tr>
-						<td>Viernes:</td>
+						<td><?php _e("Viernes:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 					<tr>
-						<td>Sábado:</td>
+						<td><?php _e("Sábado:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 					<tr>
-						<td>Domingo:</td>
+						<td><?php _e("Domingo:","pdidirlang");?></td>
 						<td>De 9:00 A.M. a 18:00 P.M.</td>
 					</tr>
 				</table>
@@ -139,7 +169,7 @@ $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
 		<div id="directorio-individual-ubicacion-geografica">
 			<header>
 				<i class="fa fa-map-o" aria-hidden="true"></i>
-				<h2><?php _e("Ubicación geográfica","pdidirlang") ?></h2>
+				<h2><?php _e("Ubicación geográfica","pdidirlang"); ?></h2>
 			</header>
 			<div id="dir-ubicacion-mapa">
 				<script>
