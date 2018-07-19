@@ -349,7 +349,7 @@
 	min-width: 283px;
 }
 
-#directorio-individual-contenedor p{
+#pdi-dir-descripcion-contenido{
 	line-height: 23px;
 	margin: 0;
 	text-align: justify;
@@ -386,7 +386,17 @@
 	width: 44%;
 }
 
+#directorio-individual-informacion-contacto{
+	width: 100%;
+	padding: 15px 20px;
+	background: #2f2f2f;
+	color: #fff;
+	background-image: linear-gradient(to bottom, #414141, #363636, #2c2c2c, #222222, #181818);
+}
 
+#directorio-individual-informacion-contacto h2{
+	color: #fff;
+}
 
 /**
 *Estilos para el header principal del contenido de la página
@@ -396,6 +406,10 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-height: 274px;
+}
+
+#directorio-individual-contenedor .dir-pagina span a{
+	color: #9cd1ff;
 }
 
 #pdi-directorio-single-cabecera{

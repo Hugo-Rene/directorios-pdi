@@ -21,14 +21,21 @@ add_action('init','cpt_directorios_pdicompanies');
 /* Filtro para añadir la plantilla single del custom post type */
 add_filter('single_template', 'directorios_plantilla_single');
 
-/* Añadir los estilos personalizados del plugin */
+/* Añadir los estilos personalizados de los templates */
 add_action('wp_enqueue_scripts','pdi_directorios_estilos');
+
+/* Añadir los estilos personalizados del panel admin */
+add_action('admin_print_styles-post-new.php','pdi_directorios_estilos_admin',11);
+add_action('admin_print_styles-post.php','pdi_directorios_estilos_admin',11);
 
 /* Registrar Metabox para la imagen de portada del directorio */
 add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_imagen_portada_meta');
 
 /* Registrar Metabox para las etiquetas de servicios adicionales */
-add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_etiquetas_meta'); 
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_etiquetas_meta');
+
+/* Registrar Metabox para los horarios de apertura del establecimiento */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_horarios_meta');
 
 /* Guardar en la DB los datos obtenidos de los fields en los metaboxes */
 add_action('save_post_dirs_pdicompanies','pdi_dir_guardar_datos',10,2);
@@ -104,7 +111,7 @@ function directorios_plantilla_single($single){
 #
 --*/
 
-/* Registro de los estilos */
+/* Registro de los estilos de los templates */
 function pdi_directorios_estilos(){
 	wp_register_style('estilos_generales', plugins_url('directorios-pdi/plantillas/css/estilos.css'));
 
@@ -112,6 +119,16 @@ function pdi_directorios_estilos(){
 
 	wp_enqueue_style('estilos_generales');
 	wp_enqueue_style('font_awesome');
+}
+
+/* Registro de los estilos del panel admin */
+function pdi_directorios_estilos_admin(){
+	global $post_type;
+	if('dirs_pdicompanies' == $post_type){
+		wp_register_style('pdidirs_admin_estilos', plugins_url('directorios-pdi/plantillas/css/pdidirs-admin-estilos.css'));
+
+		wp_enqueue_style('pdidirs_admin_estilos');
+	}
 }
 
 /*--
@@ -166,7 +183,7 @@ function pdi_portada_callback($post){
 	// Field para ingresar el link de la imagen de portada
 	?>
 	<label for="pdi_dir_portada">Ingresa aquí el link para la imágen de portada</label><br>
-	<input type="text" name="pdi_dir_portada" style="width: 300px;" value="<?php echo $portada_actual; ?>"><?php
+	<input type="text" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
 }
 
 /*--
@@ -247,6 +264,80 @@ function pdi_etiquetas_callback($post){
 	</div><?php
 }
 
+/*--
+#
+# Fin del metabox de las etiquetas de características del negocio
+#
+#--*/
+
+/*--
+#
+# Inicio del metabox de los horarios de apertura del establecimiento
+#
+#--*/
+
+/*-- Registro del metabox --*/
+function dirs_pdicompanies_meta_field_horarios(){
+	register_meta('dirs_pdicompanies','pdi-dir-horarios-apertura',
+		['description' => 'Horarios de apertura del establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_horarios_meta_callback'
+		]
+	);
+}
+
+/*-- Añadiendo el metabox --*/
+function pdi_directorios_horarios_meta(){
+	add_meta_box(
+		'pdi_horarios_metabox',
+		__('Horarios y días de apertura del establecimiento','pdidirlang'),
+		'pdi_horarios_callback'
+	);
+}
+
+/* Callback metabox horarios de apertura */
+function pdi_horarios_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_horarios_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$horarios_actual = get_post_meta($post->ID,'_pdi_dir_horarios',true);
+
+	// Field para ingresar el link de la imagen de portada
+	?>
+	<div id="pdi-dir-horarios-admin">
+		<table>
+			<tr>
+				<td>Lunes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Martes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Miércoles:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Jueves:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Viernes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Sábado:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Domingo:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+		</table>
+	</div>
+<?php }
+
+/*--
+#
+# Fin del metabox de los horarios de apertura del establecimiento
+#
+#--*/
 
 /* Función que guarda los metadatos en la base de datos */
 	function pdi_dir_guardar_datos($post_id){
@@ -295,9 +386,4 @@ function pdi_etiquetas_callback($post){
 			);
 		}
 	}
-/*--
-#
-# Fin del metabox de las etiquetas de características del negocio
-#
-#--*/
 ?>

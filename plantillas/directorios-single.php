@@ -65,40 +65,9 @@ $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalacion
 			<header>
 				<h2><?php _e("Acerca de ","pdidirlang"); echo $title; ?></h2>
 			</header>
-			<p><?php echo get_the_content(); ?></p>
+			<div id="pdi-dir-descripcion-contenido"><?php echo get_the_content(); ?></div>
 		</div>
 		<!--Fin de la descripción-->
-		<!--Inicio de la lista de servicios-->
-		<div id="directorio-individual-servicios">
-			<header>
-				<i class="fa fa-check-square" aria-hidden="true"></i>
-				<h2><?php _e("Servicios","pdidirlang"); ?></h2>
-			</header>
-			<div id="dir-lista-servicios">
-				<ul>
-					<li><span>Este es el primer servicio de prueba</span></li>
-					<li><span>Este es el segundo servicio de prueba</span></li>
-					<li><span>Este es el tercer servicio de prueba</span></li>
-					<li><span>Este es el cuarto servicio de prueba</span></li>
-				</ul>
-			</div>
-		</div>
-		<!--Fin de la lista de servicios-->
-		<!--Inicio de los métodos de pago-->
-		<div id="directorio-individual-metodos-de-pago">
-			<header>
-				<i class="fa fa-usd" aria-hidden="true"></i>
-				<h2><?php _e("Métodos de pago","pdidirlang"); ?></h2>
-			</header>
-			<div id="dir-metodos-pago">
-				<ul>
-					<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
-					<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
-					<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
-				</ul>
-			</div>
-		</div>
-		<!--Fin de los métodos de pago-->
 		<!--Inicio de la tabla de horarios-->
 		<div id="directorio-individual-horarios">
 			<header>
@@ -139,8 +108,23 @@ $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalacion
 			</div>
 		</div>
 		<!--Fin de la tabla de horarios-->
+				<!--Inicio de los métodos de pago-->
+		<div id="directorio-individual-metodos-de-pago">
+			<header>
+				<i class="fa fa-usd" aria-hidden="true"></i>
+				<h2><?php _e("Métodos de pago","pdidirlang"); ?></h2>
+			</header>
+			<div id="dir-metodos-pago">
+				<ul>
+					<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
+					<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
+					<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
+				</ul>
+			</div>
+		</div>
+		<!--Fin de los métodos de pago-->
 		<!--Inicio de la información de contacto-->
-		<div id="directorio-individual-informacion-contacto">
+	<div id="directorio-individual-informacion-contacto">
 			<header>
 				<i class="fa fa-info-circle" aria-hidden="true"></i>
 				<h2><?php _e("Información de contacto","pdidirlang"); ?></h2>

@@ -1,0 +1,38 @@
+.pdi-dir-etiquetas-contenedor>div{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eae4e4;
+}
+
+@media all and (max-width: 780px){
+.pdi-dir-etiquetas-contenedor>div>div{
+	margin: 10px 0;
+}
+}
+
+#pdi-dir-horarios-admin table{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#pdi-dir-horarios-admin table tr:nth-child(odd){
+	background: #f3f3f3;
+}
+
+#pdi-dir-horarios-admin table tr td{
+	border: 1px solid #f3f3f3;
+}
+
+#pdi-dir-horarios-admin table tr td:first-child{
+	text-align: center;
+}
+
+#pdi-dir-horarios-admin table tr td input{
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	background: transparent;
+}
+
+#pdi-dir-horarios-admin table tr td input::placeholder{
+	font-style: italic;
+}
