@@ -1,0 +1,9 @@
+A continuación un listado con posibles mejoras que se estarán
+añadiendo a la actual versión 1.0 o a versiones posteriores,
+dependiendo de la complejidad y el tiempo estimado de desarrollo
+que se requiera.
+
+*Convertir la imagen de portada en un slideshow.
+*Añadir un botón para contactar al establecimiento.
+*Añadir Title a la información de contacto para optimizar los
+datos para el posicionamiento web.

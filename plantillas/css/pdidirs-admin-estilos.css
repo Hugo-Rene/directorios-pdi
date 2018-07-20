@@ -36,3 +36,25 @@
 #pdi-dir-horarios-admin table tr td input::placeholder{
 	font-style: italic;
 }
+
+
+/* Estilos cuadro debugging */
+#pdi-dirs-cuadro-debugging{
+	padding: 20px;
+	border: 1px solid red;
+	margin-top: 25px;
+	position: relative;
+}
+
+#pdi-dirs-cuadro-debugging h3{
+	position: absolute;
+	top: -32px;
+	background: #fff;
+	padding: 5px 10px;
+}
+
+#pdi-dirs-cuadro-debugging h3:before{
+	content: "\f188";
+	font-family: "FontAwesome";
+	margin-right: 5px;
+}

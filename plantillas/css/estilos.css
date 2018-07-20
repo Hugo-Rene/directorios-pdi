@@ -360,12 +360,22 @@
 	font-size: 20px;
 }
 
-#directorio-individual-contenedor>div>header{
+#directorio-individual-contenedor>div>header,
+#pdi-dir-contenedor-metainfo div header{
 	font-size: 20px;
 }
 
-#directorio-individual-contenedor>div>header>h2{
+#directorio-individual-contenedor>div>header>h2,
+#pdi-dir-contenedor-metainfo div header h2{
 	display: inline-block;
+}
+
+#pdi-dir-contenedor-metainfo>div{
+	display: inline-block;
+}
+
+#pdi-dir-contenedor-metainfo>div:nth-child(2){
+	width: 44%;
 }
 
 #directorio-individual-servicios,
@@ -379,11 +389,6 @@
 #directorio-individual-servicios,
 #directorio-individual-horarios{
 	width: 55%;
-}
-
-#directorio-individual-metodos-de-pago,
-#directorio-individual-informacion-contacto{
-	width: 44%;
 }
 
 #directorio-individual-informacion-contacto{
@@ -457,7 +462,7 @@
 	font-size: 21px;
 	font-style: italic;
 	margin: 0;
-	padding: 5px 20px
+	padding: 5px 20px;
 }
 
 
@@ -555,6 +560,10 @@
 /**
 *Estilos para los métodos de pago
 */
+#directorio-individual-metodos-de-pago{
+	margin-bottom: 15px;
+}
+
 #directorio-individual-metodos-de-pago header h2{
 	margin-left: 6px;
 }
@@ -591,6 +600,51 @@
 	margin-right: 10px;
 }
 
+/**
+*Estilos para las redes sociales
+*/
+#pdi-dir-redes-sociales .fa {
+  padding: 10px;
+  font-size: 20px;
+  width: 40px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+#pdi-dir-redes-sociales .fa:hover {
+    opacity: 0.7;
+}
+
+#pdi-dir-redes-sociales .fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+#pdi-dir-redes-sociales .fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+#pdi-dir-redes-sociales .fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+#pdi-dir-redes-sociales .fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+#pdi-dir-redes-sociales .fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+#pdi-dir-redes-sociales .fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
 
 
 
@@ -669,5 +723,33 @@
 	#directorio-individual-contenedor>div{
 		display: block;
 		width: 100%;
+	}
+
+	#pdi-dir-contenedor-metainfo>div{
+		display: block;
+		width: 100%;
+	}
+
+	#pdi-dir-contenedor-metainfo>div:nth-child(2){
+		width: 100%;
+	}
+}
+
+@media all and (max-width: 455px){
+	#pdi-directorio-single-cabecera #pdi-directorio-logo{
+		left: calc(50% - 79px);
+	}
+
+	#directorio-individual-nombre-lugar{
+		display: none;
+	}
+
+	#directorio-individual-contenedor>header{
+		margin-bottom: 30px;
+	}
+
+	#directorio-individual-tags{
+		bottom: -50px;
+		left: 0;
 	}
 }

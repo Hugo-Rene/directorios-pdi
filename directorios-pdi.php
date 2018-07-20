@@ -1,9 +1,9 @@
 <?php
 /*
-* Plugin Name: PDI Companies Business Directory
+* Plugin Name: Directorio de Negocios PDI Now!
 * Plugin URI: http://pdicompanies.com
 * Version: 1.0
-* Description: Plugin para gestionar directorios de negocios de PDI Companies
+* Description: Plugin para gestionar directorios de negocios
 * Author: Hugo René Rodríguez Cruz
 * Author URI: http://ilustramultimedia.com
 * Text Domain: pdidirlang
@@ -182,7 +182,7 @@ function pdi_portada_callback($post){
 
 	// Field para ingresar el link de la imagen de portada
 	?>
-	<label for="pdi_dir_portada">Ingresa aquí el link para la imágen de portada</label><br>
+	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","pdidirlang"); ?></label><br>
 	<input type="text" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
 }
 
@@ -309,27 +309,41 @@ function pdi_horarios_callback($post){
 	<div id="pdi-dir-horarios-admin">
 		<table>
 			<tr>
-				<td>Lunes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<th>Día de la semana:</th>
+				<th>Horario de apertura:</th>
+				<th>Horario de cierre:</th>
+				<th>Días laborales:</th>
 			</tr>
 			<tr>
-				<td>Martes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Lunes:</td><td><input type="text" name="pdi_dir_horarios[0]" value="<?php if($horarios_actual != ''){echo $horarios_actual[0];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 			<tr>
-				<td>Miércoles:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Martes:</td><td><input type="text" name="pdi_dir_horarios[1]" value="<?php if($horarios_actual != ''){echo $horarios_actual[1];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 			<tr>
-				<td>Jueves:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Miércoles:</td><td><input type="text" name="pdi_dir_horarios[2]" value="<?php if($horarios_actual != ''){echo $horarios_actual[2];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 			<tr>
-				<td>Viernes:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Jueves:</td><td><input type="text" name="pdi_dir_horarios[3]" value="<?php if($horarios_actual != ''){echo $horarios_actual[3];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 			<tr>
-				<td>Sábado:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Viernes:</td><td><input type="text" name="pdi_dir_horarios[4]" value="<?php if($horarios_actual != ''){echo $horarios_actual[4];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 			<tr>
-				<td>Domingo:</td><td><input type="text" name="pdi_dir_horarios" value="" placeholder="Ingresa aquí el horario"></td>
+				<td>Sábado:</td><td><input type="text" name="pdi_dir_horarios[5]" value="<?php if($horarios_actual != ''){echo $horarios_actual[5];}?>" placeholder="Ingresa aquí el horario"></td>
+			</tr>
+			<tr>
+				<td>Domingo:</td><td><input type="text" name="pdi_dir_horarios[6]" value="<?php if($horarios_actual != ''){echo $horarios_actual[6];}?>" placeholder="Ingresa aquí el horario"></td>
 			</tr>
 		</table>
+	</div>
+
+	<!-- Variables y funciones para debugging -->
+	<div id="pdi-dirs-cuadro-debugging">
+		<h3>Ventana de debugging</h3>
+		<?php
+		$todos_los_campos = get_post_meta($post->ID);
+		print_r($todos_los_campos); ?>
 	</div>
 <?php }
 
@@ -351,7 +365,12 @@ function pdi_horarios_callback($post){
 			return;
 		}
 
-		//Verificar permisos de ususario
+		//Verificación del Nonce de los horarios
+		if(!isset($_POST['pdi_horarios_nonce']) || !wp_verify_nonce($_POST['pdi_horarios_nonce'], basename(__FILE__))){
+			return;
+		}
+
+		//Verificar permisos de usuario
 		if(!current_user_can('edit_post',$post_id)){
 			return;
 		}
@@ -384,6 +403,12 @@ function pdi_horarios_callback($post){
 			update_post_meta($post_id,'_pdi_dir_instalaciones_adecuadas',
 				sanitize_text_field($_POST['pdi_dir_instalaciones_adecuadas'])
 			);
+		}
+
+		//Valores del calendario
+		if(isset($_POST['pdi_dir_horarios'])){
+			$directorio_horarios = $_POST['pdi_dir_horarios'];
+			update_post_meta($post_id,'_pdi_dir_horarios',$directorio_horarios);
 		}
 	}
 ?>

@@ -68,61 +68,81 @@ $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalacion
 			<div id="pdi-dir-descripcion-contenido"><?php echo get_the_content(); ?></div>
 		</div>
 		<!--Fin de la descripción-->
-		<!--Inicio de la tabla de horarios-->
-		<div id="directorio-individual-horarios">
-			<header>
-				<i class="fa fa-clock-o" aria-hidden="true"></i>
-				<h2><?php _e("Horarios de atención","pdidirlang"); ?></h2>
-			</header>
-			<div id="dir-horarios-atencion">
-				<table id="dir-tabla-horarios">
-					<tr>
-						<td><?php _e("Lunes:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-					<tr class="dir-sin-servicio">
-						<td><?php _e("Martes:","pdidirlang");?></td>
-						<td>No hay servicio</td>
-					</tr>
-					<tr>
-						<td><?php _e("Miércoles:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-					<tr>
-						<td><?php _e("Jueves:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-					<tr>
-						<td><?php _e("Viernes:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-					<tr>
-						<td><?php _e("Sábado:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-					<tr>
-						<td><?php _e("Domingo:","pdidirlang");?></td>
-						<td>De 9:00 A.M. a 18:00 P.M.</td>
-					</tr>
-				</table>
+		<div id="pdi-dir-contenedor-metainfo">
+			<!--Inicio de la tabla de horarios-->
+			<div id="directorio-individual-horarios">
+				<header>
+					<i class="fa fa-clock-o" aria-hidden="true"></i>
+					<h2><?php _e("Horarios de atención","pdidirlang"); ?></h2>
+				</header>
+				<div id="dir-horarios-atencion">
+					<table id="dir-tabla-horarios">
+						<tr>
+							<td><?php _e("Lunes:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+						<tr class="dir-sin-servicio">
+							<td><?php _e("Martes:","pdidirlang");?></td>
+							<td>No hay servicio</td>
+						</tr>
+						<tr>
+							<td><?php _e("Miércoles:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+						<tr>
+							<td><?php _e("Jueves:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+						<tr>
+							<td><?php _e("Viernes:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+						<tr>
+							<td><?php _e("Sábado:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+						<tr>
+							<td><?php _e("Domingo:","pdidirlang");?></td>
+							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						</tr>
+					</table>
+				</div>
 			</div>
-		</div>
-		<!--Fin de la tabla de horarios-->
+			<!--Fin de la tabla de horarios-->	
+			<div>
 				<!--Inicio de los métodos de pago-->
-		<div id="directorio-individual-metodos-de-pago">
-			<header>
-				<i class="fa fa-usd" aria-hidden="true"></i>
-				<h2><?php _e("Métodos de pago","pdidirlang"); ?></h2>
-			</header>
-			<div id="dir-metodos-pago">
-				<ul>
-					<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
-					<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
-					<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
-				</ul>
+				<div id="directorio-individual-metodos-de-pago">
+					<header>
+						<i class="fa fa-usd" aria-hidden="true"></i>
+						<h2><?php _e("Métodos de pago","pdidirlang"); ?></h2>
+					</header>
+					<div id="dir-metodos-pago">
+						<ul>
+							<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
+							<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
+							<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
+						</ul>
+					</div>
+				</div>
+				<!--Fin de los métodos de pago-->
+				<!--Inicio de la sección de social media-->
+				<div id="directorio-individual-botones-social-media">
+					<header>
+						<i class="fas fa-users"></i>
+						<h2><?php _e("Redes sociales","pdidirlang"); ?></h2>
+					</header>
+					<div id="pdi-dir-redes-sociales">
+						<a href="#" class="fa fa-facebook"></a>
+						<a href="#" class="fa fa-twitter"></a>
+						<a href="#" class="fa fa-google"></a>
+						<a href="#" class="fa fa-youtube"></a>
+						<a href="#" class="fa fa-instagram"></a>
+						<a href="#" class="fa fa-pinterest"></a>
+					</div>
+				</div>
+				<!--Fin de la sección de social media-->
 			</div>
 		</div>
-		<!--Fin de los métodos de pago-->
 		<!--Inicio de la información de contacto-->
 	<div id="directorio-individual-informacion-contacto">
 			<header>
