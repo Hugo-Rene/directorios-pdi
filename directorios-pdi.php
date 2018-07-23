@@ -312,32 +312,38 @@ function pdi_horarios_callback($post){
 				<th>Día de la semana:</th>
 				<th>Horario de apertura:</th>
 				<th>Horario de cierre:</th>
-				<th>Días laborales:</th>
 			</tr>
+			<?php
+			$pdi_dir_semana = array("Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo");
+			for ($i=0; $i < 7; $i++) {
+			?>
 			<tr>
-				<td>Lunes:</td><td><input type="text" name="pdi_dir_horarios[0]" value="<?php if($horarios_actual != ''){echo $horarios_actual[0];}?>" placeholder="Ingresa aquí el horario"></td>
+				<td><?php echo $pdi_dir_semana[$i].":";?></td>
+				<!-- Horario de apertura -->
+				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i][pdi_dir_horap] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<!-- Horario de cierre -->
+				<td>Horario de cierre: <select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_horci]'; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i][pdi_dir_horci] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_ci_ampm]'; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<!-- Desactivar horarios si el día es no laboral -->
+				<script type="text/javascript">
+					document.getElementById("pdi_dir_horarios_apertura_<?php echo $i;?>").onchange = function comprobarDiaLaboral(){
+						if (document.getElementById("<?php echo 'pdi_dir_horarios_apertura_'.$i; ?>").value == "notrabaja"){
+							document.getElementById("pdi_dir_meridianos_apertura_<?php echo $i; ?>").setAttribute("disabled","disabled");
+							document.getElementById("pdi_dir_horarios_cierre_<?php echo $i; ?>").setAttribute("disabled","disabled");
+							document.getElementById("pdi_dir_meridianos_cierre_<?php echo $i; ?>").setAttribute("disabled","disabled");
+						}
+						if (this.value !== "notrabaja") {
+							document.getElementById("pdi_dir_meridianos_apertura_<?php echo $i; ?>").removeAttribute("disabled");
+							document.getElementById("pdi_dir_horarios_cierre_<?php echo $i; ?>").removeAttribute("disabled");
+							document.getElementById("pdi_dir_meridianos_cierre_<?php echo $i; ?>").removeAttribute("disabled");
+						}
+					}
+				</script>
 			</tr>
-			<tr>
-				<td>Martes:</td><td><input type="text" name="pdi_dir_horarios[1]" value="<?php if($horarios_actual != ''){echo $horarios_actual[1];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
-			<tr>
-				<td>Miércoles:</td><td><input type="text" name="pdi_dir_horarios[2]" value="<?php if($horarios_actual != ''){echo $horarios_actual[2];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
-			<tr>
-				<td>Jueves:</td><td><input type="text" name="pdi_dir_horarios[3]" value="<?php if($horarios_actual != ''){echo $horarios_actual[3];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
-			<tr>
-				<td>Viernes:</td><td><input type="text" name="pdi_dir_horarios[4]" value="<?php if($horarios_actual != ''){echo $horarios_actual[4];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
-			<tr>
-				<td>Sábado:</td><td><input type="text" name="pdi_dir_horarios[5]" value="<?php if($horarios_actual != ''){echo $horarios_actual[5];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
-			<tr>
-				<td>Domingo:</td><td><input type="text" name="pdi_dir_horarios[6]" value="<?php if($horarios_actual != ''){echo $horarios_actual[6];}?>" placeholder="Ingresa aquí el horario"></td>
-			</tr>
+			<?php	
+			}
+			?>
 		</table>
 	</div>
-
 	<!-- Variables y funciones para debugging -->
 	<div id="pdi-dirs-cuadro-debugging">
 		<h3>Ventana de debugging</h3>

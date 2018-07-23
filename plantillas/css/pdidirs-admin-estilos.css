@@ -20,6 +20,7 @@
 
 #pdi-dir-horarios-admin table tr td{
 	border: 1px solid #f3f3f3;
+	text-align: center;
 }
 
 #pdi-dir-horarios-admin table tr td:first-child{

@@ -10,6 +10,7 @@ $pdi_dirs_petfriendly = get_post_meta($post->ID,'_pdi_dir_pet_friendly',true);
 $pdi_dirs_aceptatarjetas = get_post_meta($post->ID,'_pdi_dir_acepta_tarjetas',true);
 $pdi_dirs_serviciodomicilio = get_post_meta($post->ID,'_pdi_dir_servicio_domicilio',true);
 $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalaciones_adecuadas',true);
+$pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
