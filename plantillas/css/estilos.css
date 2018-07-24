@@ -600,6 +600,13 @@
 	margin-right: 10px;
 }
 
+.dir-paypal:before{
+	content: "\f1f4";
+	font-family: FontAwesome;
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
 /**
 *Estilos para las redes sociales
 */

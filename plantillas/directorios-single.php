@@ -78,34 +78,23 @@ $pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
 				</header>
 				<div id="dir-horarios-atencion">
 					<table id="dir-tabla-horarios">
-						<tr>
-							<td><?php _e("Lunes:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
+						<?php
+							$pdi_dias_semana = array("Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo");
+							for ($i=0; $i < 7; $i++) { 
+						?>
+							<tr <?php if($pdi_dirs_diasdelasemana[$i][pdi_dir_horap] == "notrabaja"){echo "class='dir-sin-servicio'";}?>>
+							<td><?php _e($pdi_dias_semana[$i],"pdidirlang");?></td>
+							<?php if($pdi_dirs_diasdelasemana[$i][pdi_dir_horap] == "notrabaja"){
+								echo "<td>";
+								_e("No hay servicio","pdidirlang");
+								echo "</td>";
+							} else {
+								echo "<td>De ".$pdi_dirs_diasdelasemana[$i][pdi_dir_horap].":00 ".$pdi_dirs_diasdelasemana[$i][pdi_dir_ap_ampm]." a ".$pdi_dirs_diasdelasemana[$i][pdi_dir_horci].":00 ".$pdi_dirs_diasdelasemana[$i][pdi_dir_ci_ampm]."</td>";
+							}?>
 						</tr>
-						<tr class="dir-sin-servicio">
-							<td><?php _e("Martes:","pdidirlang");?></td>
-							<td>No hay servicio</td>
-						</tr>
-						<tr>
-							<td><?php _e("Miércoles:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
-						</tr>
-						<tr>
-							<td><?php _e("Jueves:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
-						</tr>
-						<tr>
-							<td><?php _e("Viernes:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
-						</tr>
-						<tr>
-							<td><?php _e("Sábado:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
-						</tr>
-						<tr>
-							<td><?php _e("Domingo:","pdidirlang");?></td>
-							<td>De 9:00 A.M. a 18:00 P.M.</td>
-						</tr>
+						<?php	
+							}
+						?>
 					</table>
 				</div>
 			</div>
@@ -122,6 +111,7 @@ $pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
 							<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
 							<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
 							<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
+							<li class="dir-paypal"><?php _e("Aceptamos Paypal","pdidirlang");?></li>
 						</ul>
 					</div>
 				</div>

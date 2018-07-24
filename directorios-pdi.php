@@ -37,6 +37,9 @@ add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_etiquetas_meta')
 /* Registrar Metabox para los horarios de apertura del establecimiento */
 add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_horarios_meta');
 
+/* Registrar Metabox para los métodos de pago que acepta el establecimiento */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_metodosdepago_meta');
+
 /* Guardar en la DB los datos obtenidos de los fields en los metaboxes */
 add_action('save_post_dirs_pdicompanies','pdi_dir_guardar_datos',10,2);
 
@@ -344,13 +347,6 @@ function pdi_horarios_callback($post){
 			?>
 		</table>
 	</div>
-	<!-- Variables y funciones para debugging -->
-	<div id="pdi-dirs-cuadro-debugging">
-		<h3>Ventana de debugging</h3>
-		<?php
-		$todos_los_campos = get_post_meta($post->ID);
-		print_r($todos_los_campos); ?>
-	</div>
 <?php }
 
 /*--
@@ -358,6 +354,62 @@ function pdi_horarios_callback($post){
 # Fin del metabox de los horarios de apertura del establecimiento
 #
 #--*/
+
+/*--
+#
+# Inicio del metabox de los métodos de pago
+#
+#--*/
+
+/*-- Registro del metabox --*/
+function dirs_pdicompanies_meta_field_metodos_de_pago(){
+	register_meta('dirs_pdicompanies','pdi-dir-metodos-pago',
+		['description' => 'Métodos de pago que acepta el establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_metodosdepago_meta_callback'
+		]
+	);
+}
+
+/*-- Añadiendo el metabox --*/
+function pdi_directorios_metodosdepago_meta(){
+	add_meta_box(
+		'pdi_metodosdepago_metabox',
+		__('Métodos de pago que acepta el establecimiento','pdidirlang'),
+		'pdi_metodosdepago_callback'
+	);
+}
+
+/* Callback metabox horarios de apertura */
+function pdi_metodosdepago_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_metodosdepago_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$metodos_de_pago_actual = get_post_meta($post->ID,'_pdi_dir_metodosdepago',true);
+	?>
+	<div id="pdi-dir-metodos-pago-container">
+		<div><input type="checkbox" name="pdi_pago_efectivo" value="pdi_pago_efectivo"/>Se acepta efectivo</div>
+		<div><input type="checkbox" name="pdi_pago_visa" value="pdi_pago_visa">Se acepta Visa</div>
+		<div><input type="checkbox" name="pdi_pago_mastercard" value="pdi_pago_mastercard">Se acepta MasterCard</div>
+		<div><input type="checkbox" name="pdi_pago_paypal" value="pdi_pago_paypal">Se acepta Paypal</div>
+	</div>
+	<!-- Variables y funciones para debugging-->
+	<div id="pdi-dirs-cuadro-debugging">
+		<h3>Ventana de debugging</h3>
+		<?php
+		$todos_los_campos = get_post_meta($post->ID);
+		print_r($todos_los_campos); ?>
+	</div>
+<?php
+}
+/*--
+#
+# Fin del metabox de los métodos de pago
+#
+#--*/
+
 
 /* Función que guarda los metadatos en la base de datos */
 	function pdi_dir_guardar_datos($post_id){
@@ -410,11 +462,15 @@ function pdi_horarios_callback($post){
 				sanitize_text_field($_POST['pdi_dir_instalaciones_adecuadas'])
 			);
 		}
-
 		//Valores del calendario
 		if(isset($_POST['pdi_dir_horarios'])){
 			$directorio_horarios = $_POST['pdi_dir_horarios'];
 			update_post_meta($post_id,'_pdi_dir_horarios',$directorio_horarios);
+		}
+		//Métodos de pago aceptados
+		if(isset($_REQUEST['pdi_dir_metodosdepago'])){
+			update_post_meta($post_id,'_pdi_dir_metodosdepago',
+				sanitize_text_field($_POST['pdi_dir_metodosdepago']));
 		}
 	}
 ?>
