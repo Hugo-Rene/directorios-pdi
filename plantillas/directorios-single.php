@@ -11,6 +11,10 @@ $pdi_dirs_aceptatarjetas = get_post_meta($post->ID,'_pdi_dir_acepta_tarjetas',tr
 $pdi_dirs_serviciodomicilio = get_post_meta($post->ID,'_pdi_dir_servicio_domicilio',true);
 $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalaciones_adecuadas',true);
 $pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
+$pdi_dirs_pagoefectivo = get_post_meta($post->ID,'_pdi_pago_efectivo',true);
+$pdi_dirs_pagovisa = get_post_meta($post->ID,'_pdi_pago_visa',true);
+$pdi_dirs_pagomastercard = get_post_meta($post->ID,'_pdi_pago_mastercard',true);
+$pdi_dirs_pagopaypal = get_post_meta($post->ID,'_pdi_pago_paypal',true);
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
@@ -108,10 +112,10 @@ $pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
 					</header>
 					<div id="dir-metodos-pago">
 						<ul>
-							<li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");?></li>
-							<li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");?></li>
-							<li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");?></li>
-							<li class="dir-paypal"><?php _e("Aceptamos Paypal","pdidirlang");?></li>
+							<?php if($pdi_dirs_pagoefectivo !== ""){?><li class="dir-efectivo"><?php _e("Aceptamos Efectivo","pdidirlang");}?></li>
+							<?php if($pdi_dirs_pagovisa !== ""){?><li class="dir-visa"><?php _e("Aceptamos Visa","pdidirlang");}?></li>
+							<?php if($pdi_dirs_pagomastercard !== ""){?><li class="dir-mastercard"><?php _e("Aceptamos Mastercard","pdidirlang");}?></li>
+							<?php if($pdi_dirs_pagopaypal !== ""){?><li class="dir-paypal"><?php _e("Aceptamos Paypal","pdidirlang");}?></li>
 						</ul>
 					</div>
 				</div>

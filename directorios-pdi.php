@@ -387,13 +387,16 @@ function pdi_metodosdepago_callback($post){
 	wp_nonce_field(basename(__FILE__),'pdi_metodosdepago_nonce');
 
 	// Obteniendo el valor de la base de datos
-	$metodos_de_pago_actual = get_post_meta($post->ID,'_pdi_dir_metodosdepago',true);
+	$pdi_dir_pago_efectivo_actual = get_post_meta($post->ID,'_pdi_pago_efectivo',true);
+	$pdi_dir_pago_visa_actual = get_post_meta($post->ID,'_pdi_pago_visa',true);
+	$pdi_dir_pago_mastercard_actual = get_post_meta($post->ID,'_pdi_pago_mastercard',true);
+	$pdi_dir_pago_paypal_actual = get_post_meta($post->ID,'_pdi_pago_paypal',true);
 	?>
 	<div id="pdi-dir-metodos-pago-container">
-		<div><input type="checkbox" name="pdi_pago_efectivo" value="pdi_pago_efectivo"/>Se acepta efectivo</div>
-		<div><input type="checkbox" name="pdi_pago_visa" value="pdi_pago_visa">Se acepta Visa</div>
-		<div><input type="checkbox" name="pdi_pago_mastercard" value="pdi_pago_mastercard">Se acepta MasterCard</div>
-		<div><input type="checkbox" name="pdi_pago_paypal" value="pdi_pago_paypal">Se acepta Paypal</div>
+		<div><input type="checkbox" name="pdi_pago_efectivo" value="pdi_pago_efectivo" <?php if($pdi_dir_pago_efectivo_actual == "pdi_pago_efectivo"){echo "checked";}?>/>Se acepta efectivo</div>
+		<div><input type="checkbox" name="pdi_pago_visa" value="pdi_pago_visa" <?php if($pdi_dir_pago_visa_actual == "pdi_pago_visa"){echo "checked";}?>/>Se acepta Visa</div>
+		<div><input type="checkbox" name="pdi_pago_mastercard" value="pdi_pago_mastercard" <?php if($pdi_dir_pago_mastercard_actual == "pdi_pago_mastercard"){echo "checked";}?>/>Se acepta MasterCard</div>
+		<div><input type="checkbox" name="pdi_pago_paypal" value="pdi_pago_paypal" <?php if($pdi_dir_pago_paypal_actual == "pdi_pago_paypal"){echo "checked";}?>/>Se acepta Paypal</div>
 	</div>
 	<!-- Variables y funciones para debugging-->
 	<div id="pdi-dirs-cuadro-debugging">
@@ -436,13 +439,13 @@ function pdi_metodosdepago_callback($post){
 		//Guardando los valores introducidos
 		
 		//Imagen de portada
-		if(isset($_REQUEST['pdi_dir_portada'])){
+		if (isset($_REQUEST['pdi_dir_portada'])){
 			update_post_meta($post_id,'_pdi_dir_portada',sanitize_text_field($_POST['pdi_dir_portada']));
 		}
 
 		//Etiquetas de servicios adicionales
 		//Pet Friendly
-		if(isset($_REQUEST['pdi_dir_pet_friendly'])){
+		if (isset($_REQUEST['pdi_dir_pet_friendly'])){
 			update_post_meta($post_id,'_pdi_dir_pet_friendly',
 			sanitize_text_field($_POST['pdi_dir_pet_friendly']));
 		}
@@ -463,14 +466,42 @@ function pdi_metodosdepago_callback($post){
 			);
 		}
 		//Valores del calendario
-		if(isset($_POST['pdi_dir_horarios'])){
+		if (isset($_POST['pdi_dir_horarios'])){
 			$directorio_horarios = $_POST['pdi_dir_horarios'];
 			update_post_meta($post_id,'_pdi_dir_horarios',$directorio_horarios);
 		}
 		//Métodos de pago aceptados
-		if(isset($_REQUEST['pdi_dir_metodosdepago'])){
-			update_post_meta($post_id,'_pdi_dir_metodosdepago',
-				sanitize_text_field($_POST['pdi_dir_metodosdepago']));
+		//Pago con Efectivo
+		if (isset($_POST['pdi_pago_efectivo'])){
+			update_post_meta($post_id,'_pdi_pago_efectivo',
+				sanitize_text_field($_POST['pdi_pago_efectivo']));
+		} else {
+			update_post_meta($post_id,'_pdi_pago_efectivo',
+				sanitize_text_field($_POST['']));
+		}
+		//Pago con Visa
+		if (isset($_POST['pdi_pago_visa'])) {
+			update_post_meta($post_id,'_pdi_pago_visa',
+				sanitize_text_field($_POST['pdi_pago_visa']));
+		} else {
+			update_post_meta($post_id,'_pdi_pago_visa',
+				sanitize_text_field($_POST['']));
+		}
+		//Pago con MasterCard
+		if (isset($_POST['pdi_pago_mastercard'])){
+			update_post_meta($post_id,'_pdi_pago_mastercard',
+				sanitize_text_field($_POST['pdi_pago_mastercard']));
+		} else {
+			update_post_meta($post_id,'_pdi_pago_mastercard',
+				sanitize_text_field($_POST['']));
+		}
+		//Pago con Paypal
+		if (isset($_POST['pdi_pago_paypal'])) {
+			update_post_meta($post_id,'_pdi_pago_paypal',
+			sanitize_text_field($_POST['pdi_pago_paypal']));
+		} else {
+			update_post_meta($post_id,'_pdi_pago_paypal',
+			sanitize_text_field($_POST['']));
 		}
 	}
 ?>
