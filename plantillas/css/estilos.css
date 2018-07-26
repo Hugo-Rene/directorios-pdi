@@ -586,6 +586,13 @@
 	margin-right: 10px;
 }
 
+.dir-amex:before{
+	content: "\f1f3";
+	font-family: FontAwesome;
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
 .dir-visa:before{
 	content: "\f1f0";
 	font-family: FontAwesome;
@@ -670,7 +677,7 @@
 #dir-tabla-horarios td{
 	border: 1px solid #333;
 	padding: 3px 10px;
-	line-height: 20px;
+	line-height: 23px;
 }
 
 .dir-sin-servicio{

@@ -305,7 +305,7 @@ function pdi_horarios_callback($post){
 	wp_nonce_field(basename(__FILE__),'pdi_horarios_nonce');
 
 	// Obteniendo el valor de la base de datos
-	$horarios_actual = get_post_meta($post->ID,'_pdi_dir_horarios',true);
+	$horarios_actual = (array) get_post_meta($post->ID,'_pdi_dir_horarios',true);
 
 	// Field para ingresar el link de la imagen de portada
 	?>
@@ -323,13 +323,17 @@ function pdi_horarios_callback($post){
 			<tr>
 				<td><?php echo $pdi_dir_semana[$i].":";?></td>
 				<!-- Horario de apertura -->
-				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i][pdi_dir_horap] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i][pdi_dir_horap] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
 				<!-- Horario de cierre -->
-				<td>Horario de cierre: <select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_horci]'; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i][pdi_dir_horci] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja"){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_ci_ampm]'; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<td>Horario de cierre: <select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_horci]'; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i][pdi_dir_horci] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_ci_ampm]'; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
 				<!-- Desactivar horarios si el día es no laboral -->
+				<?php
+				if (isset($horarios_actual)) {
+				?>
 				<script type="text/javascript">
-					document.getElementById("pdi_dir_horarios_apertura_<?php echo $i;?>").onchange = function comprobarDiaLaboral(){
-						if (document.getElementById("<?php echo 'pdi_dir_horarios_apertura_'.$i; ?>").value == "notrabaja"){
+					var pdi_apertura_dia_<?php echo $i; ?> = document.getElementById("pdi_dir_horarios_apertura_<?php echo $i;?>");
+					pdi_apertura_dia_<?php echo $i; ?>.onchange = function comprobarDiaLaboral(){
+						if (pdi_apertura_dia_<?php echo $i; ?>.value == "notrabaja" || pdi_apertura_dia_<?php echo $i; ?> == ""){
 							document.getElementById("pdi_dir_meridianos_apertura_<?php echo $i; ?>").setAttribute("disabled","disabled");
 							document.getElementById("pdi_dir_horarios_cierre_<?php echo $i; ?>").setAttribute("disabled","disabled");
 							document.getElementById("pdi_dir_meridianos_cierre_<?php echo $i; ?>").setAttribute("disabled","disabled");
@@ -340,14 +344,28 @@ function pdi_horarios_callback($post){
 							document.getElementById("pdi_dir_meridianos_cierre_<?php echo $i; ?>").removeAttribute("disabled");
 						}
 					}
-				</script>
+				<?php
+				echo "</script>";
+				}?>
 			</tr>
 			<?php	
 			}
 			?>
 		</table>
+			<!-- Variables y funciones para debugging-->
+	<div id="pdi-dirs-cuadro-debugging">
+		<h3>Ventana de debugging</h3>
+		<?php
+		$todos_los_campos = get_post_meta($post->ID);
+		print_r($todos_los_campos); ?>
+		<h4>Horarios Actual</h4>
+		<?php print_r($horarios_actual[0][pdi_dir_horap]); ?>
+		<?php if ($horarios_actual[0][pdi_dir_horap] == $variable_horario_apertura){echo "no esta definido horarios_actual";} else {echo "si esta definido horarios_actual";} ?>
 	</div>
-<?php }
+
+	</div>
+<?php
+}
 
 /*--
 #
@@ -387,23 +405,17 @@ function pdi_metodosdepago_callback($post){
 	wp_nonce_field(basename(__FILE__),'pdi_metodosdepago_nonce');
 
 	// Obteniendo el valor de la base de datos
+	$pdi_dir_pago_amex_actual = get_post_meta($post->ID,'_pdi_pago_amex',true);
 	$pdi_dir_pago_efectivo_actual = get_post_meta($post->ID,'_pdi_pago_efectivo',true);
 	$pdi_dir_pago_visa_actual = get_post_meta($post->ID,'_pdi_pago_visa',true);
 	$pdi_dir_pago_mastercard_actual = get_post_meta($post->ID,'_pdi_pago_mastercard',true);
 	$pdi_dir_pago_paypal_actual = get_post_meta($post->ID,'_pdi_pago_paypal',true);
 	?>
 	<div id="pdi-dir-metodos-pago-container">
-		<div><input type="checkbox" name="pdi_pago_efectivo" value="pdi_pago_efectivo" <?php if($pdi_dir_pago_efectivo_actual == "pdi_pago_efectivo"){echo "checked";}?>/>Se acepta efectivo</div>
-		<div><input type="checkbox" name="pdi_pago_visa" value="pdi_pago_visa" <?php if($pdi_dir_pago_visa_actual == "pdi_pago_visa"){echo "checked";}?>/>Se acepta Visa</div>
-		<div><input type="checkbox" name="pdi_pago_mastercard" value="pdi_pago_mastercard" <?php if($pdi_dir_pago_mastercard_actual == "pdi_pago_mastercard"){echo "checked";}?>/>Se acepta MasterCard</div>
-		<div><input type="checkbox" name="pdi_pago_paypal" value="pdi_pago_paypal" <?php if($pdi_dir_pago_paypal_actual == "pdi_pago_paypal"){echo "checked";}?>/>Se acepta Paypal</div>
-	</div>
-	<!-- Variables y funciones para debugging-->
-	<div id="pdi-dirs-cuadro-debugging">
-		<h3>Ventana de debugging</h3>
-		<?php
-		$todos_los_campos = get_post_meta($post->ID);
-		print_r($todos_los_campos); ?>
+		<div class="pdi-dirs-contenedor-metodo-pago"><input type="checkbox" id="pdi_pago_amex" name="pdi_pago_amex" value="pdi_pago_amex" <?php if($pdi_dir_pago_amex_actual == "pdi_pago_amex"){echo "checked";}?>/><label for="pdi_pago_amex">Se acepta Amex</label></div>
+		<div class="pdi-dirs-contenedor-metodo-pago"><input type="checkbox" id="pdi_pago_visa" name="pdi_pago_visa" value="pdi_pago_visa" <?php if($pdi_dir_pago_visa_actual == "pdi_pago_visa"){echo "checked";}?>/><label for="pdi_pago_visa">Se acepta Visa</label></div>
+		<div class="pdi-dirs-contenedor-metodo-pago"><input type="checkbox" id="pdi_pago_mastercard" name="pdi_pago_mastercard" value="pdi_pago_mastercard" <?php if($pdi_dir_pago_mastercard_actual == "pdi_pago_mastercard"){echo "checked";}?>/><label for="pdi_pago_mastercard">Se acepta MasterCard</label></div>
+		<div class="pdi-dirs-contenedor-metodo-pago"><input type="checkbox" id="pdi_pago_paypal" name="pdi_pago_paypal" value="pdi_pago_paypal" <?php if($pdi_dir_pago_paypal_actual == "pdi_pago_paypal"){echo "checked";}?>/><label for="pdi_pago_paypal">Se acepta Paypal</label></div>
 	</div>
 <?php
 }
@@ -471,16 +483,16 @@ function pdi_metodosdepago_callback($post){
 			update_post_meta($post_id,'_pdi_dir_horarios',$directorio_horarios);
 		}
 		//Métodos de pago aceptados
-		//Pago con Efectivo
-		if (isset($_POST['pdi_pago_efectivo'])){
-			update_post_meta($post_id,'_pdi_pago_efectivo',
-				sanitize_text_field($_POST['pdi_pago_efectivo']));
+		//Pago con American Express
+		if (isset($_POST['pdi_pago_amex'])){
+			update_post_meta($post_id,'_pdi_pago_amex',
+				sanitize_text_field($_POST['pdi_pago_amex']));
 		} else {
-			update_post_meta($post_id,'_pdi_pago_efectivo',
+			update_post_meta($post_id,'_pdi_pago_amex',
 				sanitize_text_field($_POST['']));
 		}
 		//Pago con Visa
-		if (isset($_POST['pdi_pago_visa'])) {
+		if (isset($_POST['pdi_pago_visa'])){
 			update_post_meta($post_id,'_pdi_pago_visa',
 				sanitize_text_field($_POST['pdi_pago_visa']));
 		} else {
@@ -496,7 +508,7 @@ function pdi_metodosdepago_callback($post){
 				sanitize_text_field($_POST['']));
 		}
 		//Pago con Paypal
-		if (isset($_POST['pdi_pago_paypal'])) {
+		if (isset($_POST['pdi_pago_paypal'])){
 			update_post_meta($post_id,'_pdi_pago_paypal',
 			sanitize_text_field($_POST['pdi_pago_paypal']));
 		} else {
