@@ -4,17 +4,30 @@ echo "<div class='container'>";
 echo "<div class='row'>";
 echo "<div id='th-twocolumns' class='th-twocolumns'>";
 $title = get_the_title();
+//Logo
 $pdi_dirs_logo = get_the_post_thumbnail_url();
+//Imagen de Portada
 $pdi_dirs_portada = get_post_meta($post->ID,'_pdi_dir_portada',true);
+//Etiquetas Servicios adicionales
 $pdi_dirs_petfriendly = get_post_meta($post->ID,'_pdi_dir_pet_friendly',true);
 $pdi_dirs_aceptatarjetas = get_post_meta($post->ID,'_pdi_dir_acepta_tarjetas',true);
 $pdi_dirs_serviciodomicilio = get_post_meta($post->ID,'_pdi_dir_servicio_domicilio',true);
 $pdi_dirs_instalacionesadecuadas = get_post_meta($post->ID,'_pdi_dir_instalaciones_adecuadas',true);
+//Días laborales de la semana
 $pdi_dirs_diasdelasemana = get_post_meta($post->ID,'_pdi_dir_horarios',true);
+//Métodos de pago
 $pdi_dirs_pagoamex = get_post_meta($post->ID,'_pdi_pago_amex',true);
 $pdi_dirs_pagovisa = get_post_meta($post->ID,'_pdi_pago_visa',true);
 $pdi_dirs_pagomastercard = get_post_meta($post->ID,'_pdi_pago_mastercard',true);
 $pdi_dirs_pagopaypal = get_post_meta($post->ID,'_pdi_pago_paypal',true);
+//Redes Sociales
+$pdi_dirs_facebook = get_post_meta($post->ID,'_pdi_dir_facebook',true);
+$pdi_dirs_twitter = get_post_meta($post->ID,'_pdi_dir_twitter',true);
+$pdi_dirs_gplus = get_post_meta($post->ID,'_pdi_dir_gplus',true);
+$pdi_dirs_youtube = get_post_meta($post->ID,'_pdi_dir_youtube',true);
+$pdi_dirs_instagram = get_post_meta($post->ID,'_pdi_dir_instagram',true);
+$pdi_dirs_pinterest = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
+
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
@@ -128,12 +141,37 @@ $pdi_dirs_pagopaypal = get_post_meta($post->ID,'_pdi_pago_paypal',true);
 						<h2><?php _e("Redes sociales","pdidirlang"); ?></h2>
 					</header>
 					<div id="pdi-dir-redes-sociales">
-						<a href="#" class="fa fa-facebook"></a>
-						<a href="#" class="fa fa-twitter"></a>
-						<a href="#" class="fa fa-google"></a>
-						<a href="#" class="fa fa-youtube"></a>
-						<a href="#" class="fa fa-instagram"></a>
-						<a href="#" class="fa fa-pinterest"></a>
+						<?php
+						//Facebook
+						if($pdi_dirs_facebook == ""){
+							echo "<a href='#' class='fa fa-facebook disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_facebook."' class='fa fa-facebook' target='_blank'></a>";}
+						//Twitter
+						if($pdi_dirs_twitter == ""){
+							echo "<a href='#' class='fa fa-twitter disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_twitter."' class='fa fa-twitter' target='_blank'></a>";}
+						//Google Plus
+						if($pdi_dirs_gplus == ""){
+							echo "<a href='#' class='fa fa-google disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_gplus."' class='fa fa-google' target='_blank'></a>";}
+						//Youtube
+						if($pdi_dirs_youtube == ""){
+							echo "<a href='#' class='fa fa-youtube disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_youtube."' class='fa fa-youtube' target='_blank'></a>";}
+						//Instagram
+						if($pdi_dirs_instagram == ""){
+							echo "<a href='#' class='fa fa-instagram disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_instagram."' class='fa fa-instagram' target='_blank'></a>";}
+						//Pinterest
+						if($pdi_dirs_pinterest == ""){
+							echo "<a href='#' class='fa fa-pinterest disabled'></a>";
+						} else { echo "<a href='".$pdi_dirs_pinterest."' class='fa fa-pinterest' target='_blank'></a>";}
+						if($pdi_dirs_facebook == "" && $pdi_dirs_twitter =="" && $pdi_dirs_gplus == "" && $pdi_dirs_youtube == "" && $pdi_dirs_instagram == "" && $pdi_dirs_pinterest == ""){
+							echo "<span class='pdi-dir-sin-redes'>";
+							_e("Este establecimiento no cuenta con redes sociales aún","pdidirlang");
+							echo "</span>";
+						}
+						?>
 					</div>
 				</div>
 				<!--Fin de la sección de social media-->

@@ -114,6 +114,53 @@
 	content: "\f1f4";
 }
 
+
+/*
+* Estilos para el formulario de Redes Sociales
+*/
+#pdi_dir_contenedor_redes_sociales>div>div{
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 15px;
+}
+
+#pdi_dir_contenedor_redes_sociales>div>div:first-child{
+	width: 50px;
+	text-align: center;
+	height: 50px;
+	font-size: 20px;
+	padding: 15px;
+	box-sizing: border-box;
+	margin-right: 10px;
+	color: #fff;
+}
+
+#pdi_dir_contenedor_redes_sociales>div>div:last-child{
+	width: calc(100% - 70px);
+}
+
+#pdi_dir_contenedor_redes_sociales input{
+	width: 100%;
+}
+
+#pdi-dir-facebook>div:first-child{
+	background: #3B5998;
+}
+#pdi-dir-twitter>div:first-child{
+	background: #55ACEE;
+}
+#pdi-dir-googleplus>div:first-child{
+	background: #dd4b39;
+}
+#pdi-dir-youtube>div:first-child{
+	background: #bb0000;
+}
+#pdi-dir-instagram>div:first-child{
+	background: #125688;
+}
+#pdi-dir-pinterest>div:first-child{
+	background: #cb2027;
+}
 /*
 * Estilos cuadro debugging
 */
