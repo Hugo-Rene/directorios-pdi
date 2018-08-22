@@ -27,7 +27,14 @@ $pdi_dirs_gplus = get_post_meta($post->ID,'_pdi_dir_gplus',true);
 $pdi_dirs_youtube = get_post_meta($post->ID,'_pdi_dir_youtube',true);
 $pdi_dirs_instagram = get_post_meta($post->ID,'_pdi_dir_instagram',true);
 $pdi_dirs_pinterest = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
-
+//Información de contacto
+$pdi_dirs_direccion = get_post_meta($post->ID,'_pdi_dir_direccion',true);
+$pdi_dirs_telefono = get_post_meta($post->ID,'_pdi_dir_telefono',true);
+$pdi_dirs_email = get_post_meta($post->ID,'_pdi_dir_email',true);
+$pdi_dirs_sitioweb = get_post_meta($post->ID,'_pdi_dir_sitioweb',true);
+//Información del mapa
+$pdi_dirs_latitud = get_post_meta($post->ID,'_pdi_dir_latitud',true);
+$pdi_dirs_longitud = get_post_meta($post->ID,'_pdi_dir_longitud',true);
 ?>
 	<!--Inicio del contenedor general -->
 	<div class="col-md-8 col-sm-12 col-sx-12">
@@ -186,19 +193,27 @@ $pdi_dirs_pinterest = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
 			<div id="dir-info-contacto">
 				<div class="dir-direccion">
 					<i class="fa fa-map-marker" aria-hidden="true"></i>
-					<span>Calle Inventada #123, Col. Mentiras, Puerto Vallarta, Jalisco.</span>
+					<span><?php if ($pdi_dirs_direccion !== "") {
+						echo $pdi_dirs_direccion;
+					} else {echo "<em>"; _e("Este establecimiento aún no tiene una Dirección registrada.","pdidirlang"); echo "</em>";} ?></span>
 				</div>
 				<div class="dir-telefono">
 					<i class="fa fa-phone" aria-hidden="true"></i>
-					<span>555 555 5555</span>
+					<span><?php if ($pdi_dirs_telefono !== "") {
+						echo "<a href='tel:".$pdi_dirs_telefono."'>".$pdi_dirs_telefono."</a>";
+					} else {echo "<em>"; _e("Este establecimiento aún no tiene un Número Telefónico registrado","pdidirlang"); echo "</em>";} ?></span>
 				</div>
 				<div class="dir-email">
 					<i class="fa fa-envelope" aria-hidden="true"></i>
-					<span>email@dominio.com</span>
+					<span><?php if ($pdi_dirs_email !== "") {
+						echo "<a href='mailto:".$pdi_dirs_email."'>".$pdi_dirs_email."</a>";
+					} else {echo "<em>"; _e("Este establecimiento aún no tiene un Correo Electrónico de contacto registrado","pdidirlang"); echo "</em>";} ?></span>
 				</div>
 				<div class="dir-pagina">
 					<i class="fa fa-globe" aria-hidden="true"></i>
-					<span><a href="#">www.paginasimulada.com</a></span>
+					<span><?php if ($pdi_dirs_sitioweb !== "") {
+						echo "<a href='".$pdi_dirs_sitioweb."' target='_blank'>".$pdi_dirs_sitioweb."</a>";
+					} else {echo "<em>"; _e("Este establecimiento aún no tiene un Sitio Web registrado","pdidirlang"); echo "</em>";}?></span>
 				</div>
 			</div>
 		</div>
@@ -209,10 +224,12 @@ $pdi_dirs_pinterest = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
 				<i class="fa fa-map-o" aria-hidden="true"></i>
 				<h2><?php _e("Ubicación geográfica","pdidirlang"); ?></h2>
 			</header>
+			<?php if ($pdi_dirs_latitud !== "" && $pdi_dirs_longitud !== "") {
+			?>
 			<div id="dir-ubicacion-mapa">
 				<script>
       		function initMap() {
-        	var uluru = {lat: 20.6030148, lng: -105.23726829999998};
+        	var uluru = {lat: <?php echo $pdi_dirs_latitud; ?>, lng: <?php echo $pdi_dirs_longitud; ?>};
         	var map = new google.maps.Map(document.getElementById('dir-ubicacion-mapa'), {
           	zoom: 17,
           	center: uluru
@@ -227,6 +244,15 @@ $pdi_dirs_pinterest = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
     			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk4lbh6c6ajnqydYIJwPcEh3aBF6Gxq28&callback=initMap">
     		</script>
 			</div>
+		<?php } else {
+			?>
+			<div id="pdi-dir-sin-ubicacion" style="background-image: url('<?php echo plugin_dir_url(__DIR__)."recursos/imagenes/mapa-no-encontrado.jpg"; ?>');">
+				<i class="fa fa-map-marker" aria-hidden="true"></i>
+				<h4><?php _e('Mapa no encontrado para este negocio'); ?></h4>
+				<p><?php _e('Todavía no se ha registrado la ubicación física de este establecimiento en nuestro directorio.'); ?></p>
+			</div>
+			<?php
+		}?>
 		</div>
 		<!--Fin de la ubicación geográfica-->
 	</div>

@@ -18,8 +18,9 @@
 */
 
 #pdi-dir-horarios-admin table{
-	width: 100%;
+	max-width: 850px;
 	border-collapse: collapse;
+	margin: 0 auto;
 }
 
 #pdi-dir-horarios-admin table tr:nth-child(odd){
@@ -161,6 +162,24 @@
 #pdi-dir-pinterest>div:first-child{
 	background: #cb2027;
 }
+
+
+/*
+* Estilos Metabox caja de contacto
+*/
+#pdi_dir_contenedor_caja_contacto input{
+	width: 100%;
+}
+
+
+/*
+* Estilos Metabox mapa
+*/
+#pdi_dir_contenedor_latitud_longitud input{
+	width: 100%;
+}
+
+
 /*
 * Estilos cuadro debugging
 */

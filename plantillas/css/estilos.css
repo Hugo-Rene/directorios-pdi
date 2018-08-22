@@ -714,7 +714,11 @@
 }
 
 #dir-info-contacto a{
-	color: #333;
+	color: #fff;
+}
+
+#dir-info-contacto em{
+	color: #9c9c9c;
 }
 
 .dir-direccion span{
@@ -736,8 +740,25 @@
 	background: #666;
 	height: 350px;
 	width: 100%;
+	margin-bottom: 25px;
 }
 
+#pdi-dir-sin-ubicacion{
+	background: #e0e0e0;
+    height: 350px;
+    padding: 40px;
+    text-align: center;
+    border: 5px solid #dcdcdc;
+    margin-bottom: 25px;
+}
+
+#pdi-dir-sin-ubicacion i{
+	font-size: 105px;
+}
+
+#pdi-dir-sin-ubicacion p{
+	font-style: italic;
+}
 
 
 /**

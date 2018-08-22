@@ -43,6 +43,12 @@ add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_metodosdepago_me
 /* Registrar Metabox para las redes sociales del establecimiento */
 add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_redes_sociales_meta');
 
+/* Registrar Metabox para la caja con los datos de contacto */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_caja_contacto_meta');
+
+/* Registrar Metabox para el mapa */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_mapa_meta');
+
 /* Guardar en la DB los datos obtenidos de los fields en los metaboxes */
 add_action('save_post_dirs_pdicompanies','pdi_dir_guardar_datos',10,2);
 
@@ -77,6 +83,7 @@ function cpt_directorios_pdicompanies(){
 								'editor',
 								'thumbnail',
 								),
+							'taxonomies' => array('pdi_dir_categorias'),
 						)
 					);
 }
@@ -188,8 +195,9 @@ function pdi_portada_callback($post){
 
 	// Field para ingresar el link de la imagen de portada
 	?>
+	<div id="pdi_dir_preview_portada"><?php if ($portada_actual !== ""){ echo '<img src="'.$portada_actual.'" width="100%" height="auto" >'; } ?></div>
 	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","pdidirlang"); ?></label><br>
-	<input type="text" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
+	<input type="text" id="pdi_dir_input_portada" onchange="pdi_dir_preview_portada()" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
 }
 
 /*--
@@ -357,11 +365,11 @@ function pdi_horarios_callback($post){
 		</table>
 			<!-- Variables y funciones para debugging-->
 	<!--<div id="pdi-dirs-cuadro-debugging">
-		<h3>Ventana de debugging</h3>
+		<h3>Ventana de debugging</h3>-->
 		<?php
 		//$todos_los_campos = get_post_meta($post->ID);
 		//print_r($todos_los_campos); ?>
-	</div>-->
+	<!--</div>-->
 
 	</div>
 <?php
@@ -514,12 +522,147 @@ function pdi_redes_sociales_callback($post){
 
 	<?php
 
-
 }
 
 /*--
 #
 # Fin del metabox de las redes sociales
+#
+#--*/
+
+/*--
+#
+# Inicio del metabox de la caja de contacto
+#
+#--*/
+
+/* Registro de los campos que irán en los metaboxes */
+function dirs_pdicompanies_meta_field_caja_contacto(){
+	register_meta('dirs_pdicompanies','pdi-dir-caja-contacto',
+		['description' => 'Información de contacto que posee el establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_caja_contacto_callback'
+		]
+	);
+}
+
+/* Registro de los metaboxes de imágenes para los directorios */
+function pdi_directorios_caja_contacto_meta(){
+	add_meta_box(
+		'pdi_caja_contacto_metabox',
+		__('Información de Contacto','pdidirlang'),
+		'pdi_caja_contacto_callback'
+	);
+}
+
+/* Callback metabox imagenes */
+function pdi_caja_contacto_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_caja_contacto_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$direccion_actual = get_post_meta($post->ID,'_pdi_dir_direccion',true);
+	$telefono_actual = get_post_meta($post->ID,'_pdi_dir_telefono',true);
+	$email_actual = get_post_meta($post->ID,'_pdi_dir_email',true);
+	$sitioweb_actual = get_post_meta($post->ID,'_pdi_dir_sitioweb',true);
+
+	?>
+	<div id="pdi_dir_contenedor_caja_contacto">
+		<div id="pdi-dir-direccion">
+			<div>
+				<label for="pdi_dir_direccion"><?php _e("Ingresa aquí la dirección del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_direccion" value="<?php echo $direccion_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-telefono">
+			<div>
+				<label for="pdi_dir_telefono"><?php _e("Ingresa aquí el teléfono del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_telefono" value="<?php echo $telefono_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-email">
+			<div>
+				<label for="pdi_dir_email"><?php _e("Ingresa aquí el email de contacto del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_email" value="<?php echo $email_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-sitioweb">
+			<div>
+				<label for="pdi_dir_sitioweb"><?php _e("Ingresa aquí el enlace del sitio web del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_sitioweb" value="<?php echo $sitioweb_actual; ?>">
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+}
+
+/*--
+#
+# Fin del metabox de la caja de contacto
+#
+#--*/
+
+/*--
+#
+# Inicio del metabox del mapa
+#
+#--*/
+
+/* Registro de los campos que irán en los metaboxes */
+function dirs_pdicompanies_meta_field_mapa(){
+	register_meta('dirs_pdicompanies','pdi-dir-mapa',
+		['description' => 'Mapa con la ubicación del establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_mapa_callback'
+		]
+	);
+}
+
+/* Registro del metabox para el mapa */
+function pdi_directorios_mapa_meta(){
+	add_meta_box(
+		'pdi_mapa_metabox',
+		__('Ubicación del establecimiento','pdidirlang'),
+		'pdi_mapa_callback'
+	);
+}
+
+/* Callback metabox mapa */
+function pdi_mapa_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_mapa_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$latitud_actual = get_post_meta($post->ID,'_pdi_dir_latitud',true);
+	$longitud_actual = get_post_meta($post->ID,'_pdi_dir_longitud',true);
+
+	?>
+	<div id="pdi_dir_contenedor_latitud_longitud">
+		<div id="pdi-dir-latitud">
+			<div>
+				<label for="pdi_dir_latitud"><?php _e("Ingresa aquí la latitud","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_latitud" value="<?php echo $latitud_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-longitud">
+			<div>
+				<label for="pdi_dir_longitud"><?php _e("Ingresa aquí la longitud","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_longitud" value="<?php echo $longitud_actual; ?>">
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+}
+
+/*--
+#
+# Fin del metabox del mapa
 #
 #--*/
 
@@ -638,5 +781,41 @@ function pdi_redes_sociales_callback($post){
 		if (isset($_REQUEST['pdi_dir_pinterest'])){
 			update_post_meta($post_id,'_pdi_dir_pinterest',sanitize_text_field($_POST['pdi_dir_pinterest']));
 		}
+		//Guardando los datos de contacto
+		//Dirección
+		if (isset($_REQUEST['pdi_dir_direccion'])){
+			update_post_meta($post_id,'_pdi_dir_direccion',sanitize_text_field($_POST['pdi_dir_direccion']));
+		}
+		//Teléfono
+		if (isset($_REQUEST['pdi_dir_telefono'])){
+			update_post_meta($post_id,'_pdi_dir_telefono',sanitize_text_field($_POST['pdi_dir_telefono']));
+		}
+		//Email
+		if (isset($_REQUEST['pdi_dir_email'])){
+			update_post_meta($post_id,'_pdi_dir_email',sanitize_text_field($_POST['pdi_dir_email']));
+		}
+		//Sitio web
+		if (isset($_REQUEST['pdi_dir_sitioweb'])){
+			update_post_meta($post_id,'_pdi_dir_sitioweb',sanitize_text_field($_POST['pdi_dir_sitioweb']));
+		}
+		//Mapa
+		//Latitud
+		if (isset($_REQUEST['pdi_dir_latitud'])) {
+			update_post_meta($post_id,'_pdi_dir_latitud',sanitize_text_field($_POST['pdi_dir_latitud']));
+		}
+		//Longitud
+		if (isset($_REQUEST['pdi_dir_longitud'])) {
+			update_post_meta($post_id,'_pdi_dir_longitud',sanitize_text_field($_POST['pdi_dir_longitud']));
+		}
 	}
 ?>
+
+<script type="text/javascript">
+	function pdi_dir_preview_portada(){
+		var pdi_dir_cuadro_preview = document.getElementById("pdi_dir_preview_portada");
+		var nueva_imagen = document.getElementById("pdi_dir_input_portada").value;
+		if (nueva_imagen !== ""){
+			pdi_dir_cuadro_preview.innerHTML = '<img src="' + nueva_imagen + '" width="100%" height="auto" />';
+		}	
+	}
+</script>
