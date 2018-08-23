@@ -83,6 +83,7 @@ function cpt_directorios_pdicompanies(){
 								'editor',
 								'thumbnail',
 								),
+							'taxonomies' => array('pdi_dir_categorias'),
 						)
 					);
 }
@@ -195,8 +196,13 @@ function pdi_portada_callback($post){
 	// Field para ingresar el link de la imagen de portada
 	?>
 	<div id="pdi_dir_preview_portada"><?php if ($portada_actual !== ""){ echo '<img src="'.$portada_actual.'" width="100%" height="auto" >'; } ?></div>
+<<<<<<< HEAD
 	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","limodirs"); ?></label><br>
 	<input type="text" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
+=======
+	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","pdidirlang"); ?></label><br>
+	<input type="text" id="pdi_dir_input_portada" onchange="pdi_dir_preview_portada()" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 }
 
 /*--
@@ -335,7 +341,11 @@ function pdi_horarios_callback($post){
 				<!-- Horario de apertura -->
 				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i]['pdi_dir_horap'] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i]['pdi_dir_ap_ampm']) && $horarios_actual[$i]['pdi_dir_ap_ampm'] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i]['pdi_dir_ap_ampm']) && $horarios_actual[$i]['pdi_dir_ap_ampm'] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
 				<!-- Horario de cierre -->
+<<<<<<< HEAD
 				<td>Horario de cierre: <select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horci]"; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i]['pdi_dir_horci'] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ci_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i]['pdi_dir_ci_ampm']) && $horarios_actual[$i]['pdi_dir_ci_ampm'] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i]['pdi_dir_ci_ampm']) && $horarios_actual[$i]['pdi_dir_ci_ampm'] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+=======
+				<td>Horario de cierre: <select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horci]"; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i][pdi_dir_horci] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ci_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 				<!-- Desactivar horarios si el día es no laboral -->
 				<?php
 				if (isset($horarios_actual)) {
@@ -362,6 +372,7 @@ function pdi_horarios_callback($post){
 			}
 			?>
 		</table>
+<<<<<<< HEAD
 			<!-- Variables y funciones para debugging
 	<div id="pdi-dirs-cuadro-debugging">
 		<h3>Ventana de debugging</h3>
@@ -373,6 +384,15 @@ function pdi_horarios_callback($post){
 		Valor esperado: <?php //echo $horarios_actual[0]["pdi_dir_horap"]; ?><br>
 		<?php //if (!isset($horarios_actual[0]['pdi_dir_horap'])){echo "no esta definido horarios_actual";} else {echo "si esta definido horarios_actual";} ?>
 	</div>-->
+=======
+			<!-- Variables y funciones para debugging-->
+	<!--<div id="pdi-dirs-cuadro-debugging">
+		<h3>Ventana de debugging</h3>-->
+		<?php
+		//$todos_los_campos = get_post_meta($post->ID);
+		//print_r($todos_los_campos); ?>
+	<!--</div>-->
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 
 	</div>
 <?php

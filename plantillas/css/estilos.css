@@ -663,12 +663,20 @@
   color: white;
 }
 
+<<<<<<< HEAD
 #pdi-dir-redes-sociales .disabled{
+=======
+#pdi-dir-redes-sociales .disabled {
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 	background: #dcdcdc;
 	pointer-events: none;
 }
 
+<<<<<<< HEAD
 .pdi-dir-sin-redes{
+=======
+.pdi-dir-sin-redes {
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 	display: block;
 	font-size: 11px;
 	font-style: italic;
@@ -748,6 +756,7 @@
 	height: 350px;
 	width: 100%;
 	margin-bottom: 25px;
+<<<<<<< HEAD
 }
 
 #pdi-dir-sin-ubicacion{
@@ -759,6 +768,19 @@
 	margin-bottom: 25px;
 }
 
+=======
+}
+
+#pdi-dir-sin-ubicacion{
+	background: #e0e0e0;
+    height: 350px;
+    padding: 40px;
+    text-align: center;
+    border: 5px solid #dcdcdc;
+    margin-bottom: 25px;
+}
+
+>>>>>>> 11015034e8e794bf823719272fdd87cbce535306
 #pdi-dir-sin-ubicacion i{
 	font-size: 105px;
 }
