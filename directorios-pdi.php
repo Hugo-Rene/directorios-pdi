@@ -1,12 +1,12 @@
 <?php
 /*
-* Plugin Name: Directorio de Negocios PDI Now!
-* Plugin URI: http://pdicompanies.com
+* Plugin Name: Limoncito Directories
+* Plugin URI: http://www.codelimoncito.com
 * Version: 1.0
-* Description: Plugin para gestionar directorios de negocios
+* Description: Manage your directories with this amazing free plugin | donate if you want to grow the farm!
 * Author: Hugo René Rodríguez Cruz
-* Author URI: http://ilustramultimedia.com
-* Text Domain: pdidirlang
+* Author URI: http://www.codelimoncito.com
+* Text Domain: limodirslang
 */
 
 /*--
@@ -40,6 +40,15 @@ add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_horarios_meta');
 /* Registrar Metabox para los métodos de pago que acepta el establecimiento */
 add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_metodosdepago_meta');
 
+/* Registrar Metabox para las redes sociales del establecimiento */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_redes_sociales_meta');
+
+/* Registrar Metabox para la caja con los datos de contacto */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_caja_contacto_meta');
+
+/* Registrar Metabox para el mapa */
+add_action('add_meta_boxes_dirs_pdicompanies', 'pdi_directorios_mapa_meta');
+
 /* Guardar en la DB los datos obtenidos de los fields en los metaboxes */
 add_action('save_post_dirs_pdicompanies','pdi_dir_guardar_datos',10,2);
 
@@ -60,8 +69,8 @@ function cpt_directorios_pdicompanies(){
 	register_post_type('dirs_pdicompanies',
 						array(
 							'labels' => array(
-								'name' => __('Directorios','pdidirlang'),
-								'singular_name' => __('Registro','pdidirlang'),
+								'name' => __('Directorios','limodirs'),
+								'singular_name' => __('Registro','limodirs'),
 							),
 							'public' => true,
 							'has_archive' => true,
@@ -118,7 +127,7 @@ function directorios_plantilla_single($single){
 function pdi_directorios_estilos(){
 	wp_register_style('estilos_generales', plugins_url('directorios-pdi/plantillas/css/estilos.css'));
 
-	wp_register_style('font_awesome', plugins_url('directorios-pdi/plantillas/css/font-awesome.min.css'));
+	wp_register_style('font_awesome', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 
 	wp_enqueue_style('estilos_generales');
 	wp_enqueue_style('font_awesome');
@@ -170,7 +179,7 @@ function dirs_pdicompanies_meta_field_portada(){
 function pdi_directorios_imagen_portada_meta(){
 	add_meta_box(
 		'pdi_portada_metabox',
-		__('Imagen de portada','pdidirlang'),
+		__('Imagen de portada','limodirs'),
 		'pdi_portada_callback'
 	);
 }
@@ -185,7 +194,8 @@ function pdi_portada_callback($post){
 
 	// Field para ingresar el link de la imagen de portada
 	?>
-	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","pdidirlang"); ?></label><br>
+	<div id="pdi_dir_preview_portada"><?php if ($portada_actual !== ""){ echo '<img src="'.$portada_actual.'" width="100%" height="auto" >'; } ?></div>
+	<label for="pdi_dir_portada"><?php _e("Ingresa aquí el link para la imagen de portada","limodirs"); ?></label><br>
 	<input type="text" name="pdi_dir_portada" style="width: 253px;" value="<?php echo $portada_actual; ?>"><?php
 }
 
@@ -216,7 +226,7 @@ function dirs_pdicompanies_meta_field_etiquetas(){
 function pdi_directorios_etiquetas_meta(){
 	add_meta_box(
 		'pdi_etiquetas_metabox',
-		__('Etiquetas de servicios adicionales','pdidirlang'),
+		__('Etiquetas de servicios adicionales','limodirs'),
 		'pdi_etiquetas_callback'
 	);
 }
@@ -294,7 +304,7 @@ function dirs_pdicompanies_meta_field_horarios(){
 function pdi_directorios_horarios_meta(){
 	add_meta_box(
 		'pdi_horarios_metabox',
-		__('Horarios y días de apertura del establecimiento','pdidirlang'),
+		__('Horarios y días de apertura del establecimiento','limodirs'),
 		'pdi_horarios_callback'
 	);
 }
@@ -305,7 +315,7 @@ function pdi_horarios_callback($post){
 	wp_nonce_field(basename(__FILE__),'pdi_horarios_nonce');
 
 	// Obteniendo el valor de la base de datos
-	$horarios_actual = (array) get_post_meta($post->ID,'_pdi_dir_horarios',true);
+	$horarios_actual = (array)get_post_meta($post->ID,'_pdi_dir_horarios',true);
 
 	// Field para ingresar el link de la imagen de portada
 	?>
@@ -323,9 +333,9 @@ function pdi_horarios_callback($post){
 			<tr>
 				<td><?php echo $pdi_dir_semana[$i].":";?></td>
 				<!-- Horario de apertura -->
-				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i][pdi_dir_horap] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ap_ampm]) && $horarios_actual[$i][pdi_dir_ap_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<td>Horario de apertura: <select id="<?php echo 'pdi_dir_horarios_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horap]"; ?>"><option value="notrabaja">No trabaja</option><?php for($e=1; $e <= 12; $e++){if($horarios_actual[$i]['pdi_dir_horap'] == $e){ echo "<option value='".$e."' selected>".$e."</option>"; } else {echo "<option value='".$e."'>".$e."</option>";}}?></select><select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_apertura_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ap_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i]['pdi_dir_ap_ampm']) && $horarios_actual[$i]['pdi_dir_ap_ampm'] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i]['pdi_dir_ap_ampm']) && $horarios_actual[$i]['pdi_dir_ap_ampm'] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
 				<!-- Horario de cierre -->
-				<td>Horario de cierre: <select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_horci]'; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i][pdi_dir_horci] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i][pdi_dir_horap] == "notrabaja" || $horarios_actual[$i][pdi_dir_horap] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo 'pdi_dir_horarios['.$i.'][pdi_dir_ci_ampm]'; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i][pdi_dir_ci_ampm]) && $horarios_actual[$i][pdi_dir_ci_ampm] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
+				<td>Horario de cierre: <select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_horarios_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_horci]"; ?>"><?php for($o=1; $o <= 12; $o++){if($horarios_actual[$i]['pdi_dir_horci'] == $o){ echo "<option value='".$o."' selected>".$o."</option>"; } else {echo "<option value='".$o."'>".$o."</option>";}}?></select><select <?php if ($horarios_actual[$i]['pdi_dir_horap'] == "notrabaja" || $horarios_actual[$i]['pdi_dir_horap'] == ""){echo " disabled";}?> id="<?php echo 'pdi_dir_meridianos_cierre_'.$i;?>" name="<?php echo "pdi_dir_horarios[".$i."][pdi_dir_ci_ampm]"; ?>"><option value="A.M." <?php if(isset($horarios_actual[$i]['pdi_dir_ci_ampm']) && $horarios_actual[$i]['pdi_dir_ci_ampm'] == "A.M."){echo " selected";}?>>A.M.</option><option value="P.M."<?php if(isset($horarios_actual[$i]['pdi_dir_ci_ampm']) && $horarios_actual[$i]['pdi_dir_ci_ampm'] == "P.M."){echo " selected";}?>>P.M.</option></select></td>
 				<!-- Desactivar horarios si el día es no laboral -->
 				<?php
 				if (isset($horarios_actual)) {
@@ -352,16 +362,17 @@ function pdi_horarios_callback($post){
 			}
 			?>
 		</table>
-			<!-- Variables y funciones para debugging-->
+			<!-- Variables y funciones para debugging
 	<div id="pdi-dirs-cuadro-debugging">
 		<h3>Ventana de debugging</h3>
 		<?php
-		$todos_los_campos = get_post_meta($post->ID);
-		print_r($todos_los_campos); ?>
-		<h4>Horarios Actual</h4>
-		<?php print_r($horarios_actual[0][pdi_dir_horap]); ?>
-		<?php if ($horarios_actual[0][pdi_dir_horap] == $variable_horario_apertura){echo "no esta definido horarios_actual";} else {echo "si esta definido horarios_actual";} ?>
-	</div>
+		//$todos_los_campos = get_post_meta($post->ID);
+		//print_r($todos_los_campos); ?>
+		<!--<h4>Horarios Actual</h4>
+		Matriz: <?php //print_r($horarios_actual[0]);?><br>
+		Valor esperado: <?php //echo $horarios_actual[0]["pdi_dir_horap"]; ?><br>
+		<?php //if (!isset($horarios_actual[0]['pdi_dir_horap'])){echo "no esta definido horarios_actual";} else {echo "si esta definido horarios_actual";} ?>
+	</div>-->
 
 	</div>
 <?php
@@ -394,7 +405,7 @@ function dirs_pdicompanies_meta_field_metodos_de_pago(){
 function pdi_directorios_metodosdepago_meta(){
 	add_meta_box(
 		'pdi_metodosdepago_metabox',
-		__('Métodos de pago que acepta el establecimiento','pdidirlang'),
+		__('Métodos de pago que acepta el establecimiento','limodirs'),
 		'pdi_metodosdepago_callback'
 	);
 }
@@ -422,6 +433,239 @@ function pdi_metodosdepago_callback($post){
 /*--
 #
 # Fin del metabox de los métodos de pago
+#
+#--*/
+
+
+/*--
+#
+# Inicio del metabox de las redes sociales
+#
+#--*/
+
+/* Registro de los campos que irán en los metaboxes */
+function dirs_pdicompanies_meta_field_redes_sociales(){
+	register_meta('dirs_pdicompanies','pdi-dir-redes-sociales',
+		['description' => 'Redes sociales que posee el establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_redes_sociales_callback'
+		]
+	);
+}
+
+/* Registro de los metaboxes de imágenes para los directorios */
+function pdi_directorios_redes_sociales_meta(){
+	add_meta_box(
+		'pdi_redes_sociales_metabox',
+		__('Redes Sociales','pdidirlang'),
+		'pdi_redes_sociales_callback'
+	);
+}
+
+/* Callback metabox imagenes */
+function pdi_redes_sociales_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_redes_sociales_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$facebook_actual = get_post_meta($post->ID,'_pdi_dir_facebook',true);
+	$twitter_actual = get_post_meta($post->ID,'_pdi_dir_twitter',true);
+	$gplus_actual = get_post_meta($post->ID,'_pdi_dir_gplus',true);
+	$youtube_actual = get_post_meta($post->ID,'_pdi_dir_youtube',true);
+	$instagram_actual = get_post_meta($post->ID,'_pdi_dir_instagram',true);
+	$pinterest_actual = get_post_meta($post->ID,'_pdi_dir_pinterest',true);
+
+	// Field para ingresar el link de cada red social
+	?>
+	<div id="pdi_dir_contenedor_redes_sociales">
+		<div id="pdi-dir-facebook">
+			<div><i class="fa fa-facebook"></i></div>
+			<div>
+				<label for="pdi_dir_facebook"><?php _e("Ingresa aquí el link del perfil de facebook del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_facebook" value="<?php echo $facebook_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-twitter">
+			<div><i class="fa fa-twitter"></i></div>
+			<div>
+				<label for="pdi_dir_twitter"><?php _e("Ingresa aquí el link de la cuenta de Twitter del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_twitter" value="<?php echo $twitter_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-googleplus">
+			<div><i class="fa fa-google"></i></div>
+			<div>
+				<label for="pdi_dir_gplus"><?php _e("Ingresa aquí el link de la cuenta de Google + del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_gplus" value="<?php echo $gplus_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-youtube">
+			<div><i class="fa fa-youtube"></i></div>
+			<div>
+				<label for="pdi_dir_youtube"><?php _e("Ingresa aquí el link de la cuenta de Youtube del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_youtube" value="<?php echo $youtube_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-instagram">
+			<div><i class="fa fa-instagram"></i></div>
+			<div>
+				<label for="pdi_dir_instagram"><?php _e("Ingresa aquí el link de la cuenta de Instagram del establecimiento"); ?></label><br>
+				<input type="text" name="pdi_dir_instagram" value="<?php echo $instagram_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-pinterest">
+			<div><i class="fa fa-pinterest"></i></div>
+			<div>
+				<label for="pdi_dir_pinterest"><?php _e("Ingresa aquí el link de la cuenta de Pinterest del establecimiento"); ?></label><br>
+				<input type="text" name="pdi_dir_pinterest" value="<?php echo $pinterest_actual; ?>">
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+}
+
+/*--
+#
+# Fin del metabox de las redes sociales
+#
+#--*/
+
+/*--
+#
+# Inicio del metabox de la caja de contacto
+#
+#--*/
+
+/* Registro de los campos que irán en los metaboxes */
+function dirs_pdicompanies_meta_field_caja_contacto(){
+	register_meta('dirs_pdicompanies','pdi-dir-caja-contacto',
+		['description' => 'Información de contacto que posee el establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_caja_contacto_callback'
+		]
+	);
+}
+
+/* Registro de los metaboxes de imágenes para los directorios */
+function pdi_directorios_caja_contacto_meta(){
+	add_meta_box(
+		'pdi_caja_contacto_metabox',
+		__('Información de Contacto','pdidirlang'),
+		'pdi_caja_contacto_callback'
+	);
+}
+
+/* Callback metabox imagenes */
+function pdi_caja_contacto_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_caja_contacto_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$direccion_actual = get_post_meta($post->ID,'_pdi_dir_direccion',true);
+	$telefono_actual = get_post_meta($post->ID,'_pdi_dir_telefono',true);
+	$email_actual = get_post_meta($post->ID,'_pdi_dir_email',true);
+	$sitioweb_actual = get_post_meta($post->ID,'_pdi_dir_sitioweb',true);
+
+	?>
+	<div id="pdi_dir_contenedor_caja_contacto">
+		<div id="pdi-dir-direccion">
+			<div>
+				<label for="pdi_dir_direccion"><?php _e("Ingresa aquí la dirección del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_direccion" value="<?php echo $direccion_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-telefono">
+			<div>
+				<label for="pdi_dir_telefono"><?php _e("Ingresa aquí el teléfono del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_telefono" value="<?php echo $telefono_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-email">
+			<div>
+				<label for="pdi_dir_email"><?php _e("Ingresa aquí el email de contacto del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_email" value="<?php echo $email_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-sitioweb">
+			<div>
+				<label for="pdi_dir_sitioweb"><?php _e("Ingresa aquí el enlace del sitio web del establecimiento","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_sitioweb" value="<?php echo $sitioweb_actual; ?>">
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+}
+
+/*--
+#
+# Fin del metabox de la caja de contacto
+#
+#--*/
+
+/*--
+#
+# Inicio del metabox del mapa
+#
+#--*/
+
+/* Registro de los campos que irán en los metaboxes */
+function dirs_pdicompanies_meta_field_mapa(){
+	register_meta('dirs_pdicompanies','pdi-dir-mapa',
+		['description' => 'Mapa con la ubicación del establecimiento',
+		'single' => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback' => 'pdi_directorios_mapa_callback'
+		]
+	);
+}
+
+/* Registro del metabox para el mapa */
+function pdi_directorios_mapa_meta(){
+	add_meta_box(
+		'pdi_mapa_metabox',
+		__('Ubicación del establecimiento','pdidirlang'),
+		'pdi_mapa_callback'
+	);
+}
+
+/* Callback metabox mapa */
+function pdi_mapa_callback($post){
+	// Field nonce para aumentar la seguridad al ingresar información a la DB
+	wp_nonce_field(basename(__FILE__),'pdi_mapa_nonce');
+
+	// Obteniendo el valor de la base de datos
+	$latitud_actual = get_post_meta($post->ID,'_pdi_dir_latitud',true);
+	$longitud_actual = get_post_meta($post->ID,'_pdi_dir_longitud',true);
+
+	?>
+	<div id="pdi_dir_contenedor_latitud_longitud">
+		<div id="pdi-dir-latitud">
+			<div>
+				<label for="pdi_dir_latitud"><?php _e("Ingresa aquí la latitud","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_latitud" value="<?php echo $latitud_actual; ?>">
+			</div>
+		</div>
+		<div id="pdi-dir-longitud">
+			<div>
+				<label for="pdi_dir_longitud"><?php _e("Ingresa aquí la longitud","pdidirlang"); ?></label><br>
+				<input type="text" name="pdi_dir_longitud" value="<?php echo $longitud_actual; ?>">
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+}
+
+/*--
+#
+# Fin del metabox del mapa
 #
 #--*/
 
@@ -515,5 +759,66 @@ function pdi_metodosdepago_callback($post){
 			update_post_meta($post_id,'_pdi_pago_paypal',
 			sanitize_text_field($_POST['']));
 		}
+		//Guardando las redes sociales
+		//facebook
+		if (isset($_REQUEST['pdi_dir_facebook'])){
+			update_post_meta($post_id,'_pdi_dir_facebook',sanitize_text_field($_POST['pdi_dir_facebook']));
+		}
+		//Twitter
+		if (isset($_REQUEST['pdi_dir_twitter'])){
+			update_post_meta($post_id,'_pdi_dir_twitter',sanitize_text_field($_POST['pdi_dir_twitter']));
+		}
+		//Google Plus
+		if (isset($_REQUEST['pdi_dir_gplus'])){
+			update_post_meta($post_id,'_pdi_dir_gplus',sanitize_text_field($_POST['pdi_dir_gplus']));
+		}
+		//Youtube
+		if (isset($_REQUEST['pdi_dir_youtube'])){
+			update_post_meta($post_id,'_pdi_dir_youtube',sanitize_text_field($_POST['pdi_dir_youtube']));
+		}
+		//Instagram
+		if (isset($_REQUEST['pdi_dir_instagram'])){
+			update_post_meta($post_id,'_pdi_dir_instagram',sanitize_text_field($_POST['pdi_dir_instagram']));
+		}
+		//Pinterest
+		if (isset($_REQUEST['pdi_dir_pinterest'])){
+			update_post_meta($post_id,'_pdi_dir_pinterest',sanitize_text_field($_POST['pdi_dir_pinterest']));
+		}
+		//Guardando los datos de contacto
+		//Dirección
+		if (isset($_REQUEST['pdi_dir_direccion'])){
+			update_post_meta($post_id,'_pdi_dir_direccion',sanitize_text_field($_POST['pdi_dir_direccion']));
+		}
+		//Teléfono
+		if (isset($_REQUEST['pdi_dir_telefono'])){
+			update_post_meta($post_id,'_pdi_dir_telefono',sanitize_text_field($_POST['pdi_dir_telefono']));
+		}
+		//Email
+		if (isset($_REQUEST['pdi_dir_email'])){
+			update_post_meta($post_id,'_pdi_dir_email',sanitize_text_field($_POST['pdi_dir_email']));
+		}
+		//Sitio web
+		if (isset($_REQUEST['pdi_dir_sitioweb'])){
+			update_post_meta($post_id,'_pdi_dir_sitioweb',sanitize_text_field($_POST['pdi_dir_sitioweb']));
+		}
+		//Mapa
+		//Latitud
+		if (isset($_REQUEST['pdi_dir_latitud'])) {
+			update_post_meta($post_id,'_pdi_dir_latitud',sanitize_text_field($_POST['pdi_dir_latitud']));
+		}
+		//Longitud
+		if (isset($_REQUEST['pdi_dir_longitud'])) {
+			update_post_meta($post_id,'_pdi_dir_longitud',sanitize_text_field($_POST['pdi_dir_longitud']));
+		}
 	}
 ?>
+
+<script type="text/javascript">
+	function pdi_dir_preview_portada(){
+		var pdi_dir_cuadro_preview = document.getElementById("pdi_dir_preview_portada");
+		var nueva_imagen = document.getElementById("pdi_dir_input_portada").value;
+		if (nueva_imagen !== ""){
+			pdi_dir_cuadro_preview.innerHTML = '<img src="' + nueva_imagen + '" width="100%" height="auto" />';
+		}	
+	}
+</script>

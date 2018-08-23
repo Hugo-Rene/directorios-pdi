@@ -411,6 +411,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-height: 274px;
+	border-bottom: 5px solid #337ab7;
 }
 
 #directorio-individual-contenedor .dir-pagina span a{
@@ -435,12 +436,13 @@
 #pdi-directorio-single-cabecera #pdi-directorio-logo{
 	display: inline-block;
 	position: absolute;
-	bottom: -15px;
+	bottom: 16px;
 	left: 15px;
-	padding: 3px;
-	background: #fff;
 	border-radius: 1px;
-	border: 1px solid #d0d0d0;
+	-webkit-box-shadow: 0px 0px 41px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 41px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 41px 0px rgba(0,0,0,0.75);
+
 }
 
 #pdi-directorio-single-cabecera #pdi-directorio-logo>div{
@@ -452,7 +454,7 @@
 
 #directorio-individual-nombre-lugar{
 	position: absolute;
-	bottom: 15px;
+	bottom: 36px;
 	left: 180px;
 }
 
@@ -493,8 +495,8 @@
 
 #directorio-individual-tags{
 	position: absolute;
-	bottom: -27px;
-	right: 0;
+	bottom: 16px;
+	left: 200px;
 }
 
 #directorio-individual-tags>div{
@@ -561,7 +563,8 @@
 *Estilos para los métodos de pago
 */
 #directorio-individual-metodos-de-pago{
-	margin-bottom: 15px;
+	height: 145px;
+	margin-bottom: 6px;
 }
 
 #directorio-individual-metodos-de-pago header h2{
@@ -660,11 +663,25 @@
   color: white;
 }
 
+#pdi-dir-redes-sociales .disabled{
+	background: #dcdcdc;
+	pointer-events: none;
+}
+
+.pdi-dir-sin-redes{
+	display: block;
+	font-size: 11px;
+	font-style: italic;
+}
 
 
 /**
 *Estilos para los horarios de atención
 */
+#dir-horarios-atencion table tr{
+	font-size: 14px;
+}
+
 #dir-horarios-atencion,#dir-info-contacto{
 	margin-left: 22px;
 }
@@ -704,7 +721,11 @@
 }
 
 #dir-info-contacto a{
-	color: #333;
+	color: #fff;
+}
+
+#dir-info-contacto em{
+	color: #9c9c9c;
 }
 
 .dir-direccion span{
@@ -726,8 +747,25 @@
 	background: #666;
 	height: 350px;
 	width: 100%;
+	margin-bottom: 25px;
 }
 
+#pdi-dir-sin-ubicacion{
+	background: #e0e0e0;
+	height: 350px;
+	padding: 40px;
+	text-align: center;
+	border: 5px solid #dcdcdc;
+	margin-bottom: 25px;
+}
+
+#pdi-dir-sin-ubicacion i{
+	font-size: 105px;
+}
+
+#pdi-dir-sin-ubicacion p{
+	font-style: italic;
+}
 
 
 /**
@@ -765,5 +803,17 @@
 	#directorio-individual-tags{
 		bottom: -50px;
 		left: 0;
+	}
+
+	#directorio-individual-metodos-de-pago{
+		height: initial;
+	}
+
+	#dir-horarios-atencion table tr{
+		font-size: 12px;
+	}
+
+	#dir-horarios-atencion, #dir-info-contacto{
+		margin-left: 0;
 	}
 }
